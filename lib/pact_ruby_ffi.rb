@@ -3,7 +3,7 @@ require 'ffi'
 require 'detect_os'
 module PactRubyFfi
   extend FFI::Library
-  ffi_lib DetectOS.mac_arm? ? './pact/ffi/osxaarch64/libpact_ffi.dylib' : './pact/ffi/libpact_ffi.so' 
+  ffi_lib DetectOS.get_bin_path
 
   FfiSpecificationVersion = Hash[
     'SPECIFICATION_VERSION_UNKNOWN' => 0,
