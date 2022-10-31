@@ -5,10 +5,12 @@ RSpec.describe 'pactffi verifier spec' do
   describe 'with mismatching requests' do
     before do
       PactRubyFfi.pactffi_logger_init
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log-error.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
-      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log-error.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
+      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
       PactRubyFfi.pactffi_logger_apply
       # PactRubyFfi.pactffi_init(PactRubyFfi::FfiLogLevel['LOG_LEVEL_INFO'])
     end
@@ -32,7 +34,8 @@ RSpec.describe 'pactffi verifier spec' do
       PactRubyFfi.pactffi_verifier_set_consumer_filters(verifier, nil, 0)
       # ffi.pactffi_verifier_set_consumer_filters(handle, getCData(consumers), count(consumers));
 
-      ffi.pactffi_verifier_add_file_source(verifier,'/Users/saf/dev/pact-foundation/pact-reference/ruby/ruby_ffi/pact/http-consumer-1-http-provider.json')
+      ffi.pactffi_verifier_add_file_source(verifier,
+                                           '/Users/saf/dev/pact-foundation/pact-reference/ruby/ruby_ffi/pact/http-consumer-1-http-provider.json')
       result = PactRubyFfi.pactffi_verifier_execute(verifier)
       puts PactRubyFfi.pactffi_verifier_logs(verifier)
       expect(result).not_to be PactRubyFfi::FfiVerifyProviderResponse['VERIFICATION_SUCCESSFUL']
@@ -47,7 +50,7 @@ RSpec.describe 'pactffi verifier spec' do
       PactRubyFfi.pactffi_verifier_set_consumer_filters(verifier, nil, 0)
       # ffi.pactffi_verifier_set_consumer_filters(handle, getCData(consumers), count(consumers));
       local_pact = '/Users/saf/dev/pact-foundation/pact-reference/ruby/ruby_ffi/pact_ruby_ffi/pacts/http-consumer-1-http-provider.json'
-      PactRubyFfi.pactffi_verifier_add_file_source(verifier,local_pact)
+      PactRubyFfi.pactffi_verifier_add_file_source(verifier, local_pact)
 
       result = PactRubyFfi.pactffi_verifier_execute(verifier)
       puts PactRubyFfi.pactffi_verifier_logs(verifier)

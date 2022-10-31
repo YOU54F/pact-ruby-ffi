@@ -70,10 +70,12 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
 
     before do
       PactRubyFfi.pactffi_logger_init
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log-error.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
-      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log-error.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
+      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
       PactRubyFfi.pactffi_logger_apply
       # PactRubyFfi.pactffi_init(PactRubyFfi::FfiLogLevel['LOG_LEVEL_INFO'])      PactRubyFfi.pactffi_with_specification(pact, PactRubyFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V3'])
       PactRubyFfi.pactffi_upon_receiving(interaction, 'A POST request to create book')
@@ -200,10 +202,12 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
 
     before do
       PactRubyFfi.pactffi_logger_init
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log-error.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
-      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log-error.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
+      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
       PactRubyFfi.pactffi_logger_apply
       # PactRubyFfi.pactffi_init(PactRubyFfi::FfiLogLevel['LOG_LEVEL_INFO'])      PactRubyFfi.pactffi_with_specification(pact, PactRubyFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V3'])
       PactRubyFfi.pactffi_upon_receiving(interaction, 'A POST request to create book')
@@ -220,8 +224,8 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
                                     'application/ld+json; charset=utf-8', response_interaction_body)
     end
     after do
-      expect(PactRubyFfi::pactffi_mock_server_matched(mock_server_port)).to be false
-      mismatchers = PactRubyFfi::pactffi_mock_server_mismatches(mock_server_port)
+      expect(PactRubyFfi.pactffi_mock_server_matched(mock_server_port)).to be false
+      mismatchers = PactRubyFfi.pactffi_mock_server_mismatches(mock_server_port)
       puts JSON.parse(mismatchers)
       expect(JSON.parse(mismatchers).length).to eql(1)
       PactRubyFfi.pactffi_cleanup_mock_server(mock_server_port)
@@ -231,7 +235,6 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
       puts "Mock server port=#{mock_server_port}"
 
       options = {
-
 
         body: {
           isbn: '0099740915',
@@ -253,7 +256,6 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
                                  body: options[:body].to_json,
                                  headers: { 'Content-Type' => 'application/json' }
                                })
-
     end
   end
 end

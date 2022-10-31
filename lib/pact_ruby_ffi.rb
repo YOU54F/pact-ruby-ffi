@@ -1,12 +1,9 @@
 # require 'pact_ruby_ffi/version'
 require 'ffi'
-require_relative 'detect_os'
-import OS
-# require 'json'
-# require 'httparty'
+require 'detect_os'
 module PactRubyFfi
   extend FFI::Library
-  ffi_lib OS.macos? './pact/ffi/libpact_ffi.so': './pact/ffi/osxaarch64/libpact_ffi.dylib'
+  ffi_lib DetectOS.mac_arm? ? './pact/ffi/osxaarch64/libpact_ffi.dylib' : './pact/ffi/libpact_ffi.so' 
 
   FfiSpecificationVersion = Hash[
     'SPECIFICATION_VERSION_UNKNOWN' => 0,
