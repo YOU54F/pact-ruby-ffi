@@ -40,7 +40,8 @@ jobs:
         with:
           ruby-version: '3.0.4'
       - run: ./script/download-libs.sh
-      - run: ls pact
+      - run: ls pact/ffi
+      - run: gem update bundler
       - run: bundle install
       - run: rake spec
       - run: pact-broker publish pacts --auto-detect-version-properties --consumer-app-version $(git rev-parse HEAD)
