@@ -46,3 +46,6 @@ jobs:
       - run: rake spec
       - run: pact-broker publish pacts --auto-detect-version-properties --consumer-app-version $(git rev-parse HEAD)
         working-directory: message_pact_ruby/spec
+      - name: Stop OSS Pact Broker
+        if: always()
+        run: docker-compose down
