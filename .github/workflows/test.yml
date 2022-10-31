@@ -39,7 +39,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0.4'
-      - run: ./script/download-libs
+      - run: ./script/download-libs.sh
       - run: bundle install
       - run: rake spec
       - run: pact-broker publish pacts --auto-detect-version-properties --consumer-app-version $(git rev-parse HEAD)
