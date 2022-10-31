@@ -41,11 +41,9 @@ module DetectOS
       './pact/ffi/osxaarch64/libpact_ffi.dylib'
     elsif mac_arm?
       './pact/ffi/osxaarch64/libpact_ffi.dylib'
-
     elsif mac?
       './pact/ffi/osxx8664/libpact_ffi.dylib'
-    elsif mac_arm?
-      linux?
+    elsif linux?
       './pact/ffi/linuxx8664/libpact_ffi.dylib'
     elsif linux_arm?
       './pact/ffi/linuxaarch64/libpact_ffi.dylib'
