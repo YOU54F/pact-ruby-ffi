@@ -20,8 +20,6 @@ warn "Cleaning ffi directory $FFI_DIR"
 rm -rf "${FFI_DIR:?}"
 mkdir -p "$FFI_DIR/osxaarch64"
 mkdir -p "$FFI_DIR/linuxaarch64"
-mkdir -p "$FFI_DIR/osxx86664"
-mkdir -p "$FFI_DIR/linuxx8664"
 
 function download_ffi_file {
   if [ -z "${1:-}" ]; then

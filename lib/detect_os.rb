@@ -36,19 +36,17 @@ module DetectOS
 
   def self.get_bin_path
     if windows?
-      './pact/ffi/pact_ffi.dll'
-    elsif mac_arm?
-      './pact/ffi/osxaarch64/libpact_ffi.dylib'
+      './pact/ffi/pact_ffi.dll.lib'
     elsif mac_arm?
       './pact/ffi/osxaarch64/libpact_ffi.dylib'
     elsif mac?
-      './pact/ffi/osxx8664/libpact_ffi.dylib'
-    elsif linux?
-      './pact/ffi/linuxx8664/libpact_ffi.dylib'
+      './pact/ffi/libpact_ffi.dylib'
     elsif linux_arm?
-      './pact/ffi/linuxaarch64/libpact_ffi.dylib'
+      './pact/ffi/linuxaarch64/libpact_ffi.so'
+    elsif linux?
+      './pact/ffi/libpact_ffi.so'
     else
-      raise "Detected #{RbConfig::CONFIG['arch']} -- I have no idea what to do with that."
+      raise "Detected #{RbConfig::CONFIG['arch']}-- I have no idea what to do with that."
     end
   end
 end
