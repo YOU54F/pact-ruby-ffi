@@ -41,6 +41,8 @@ jobs:
           ruby-version: '3.0.4'
       - run: ./script/download-libs.sh
       - run: ls pact/ffi
+      - run: ls pact/ffi/linuxaarch64
+      - run: ls pact/ffi/osxaarch64
       - run: gem update bundler
       - run: bundle install
       - run: rake spec

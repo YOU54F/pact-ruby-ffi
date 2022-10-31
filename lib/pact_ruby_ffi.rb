@@ -1,10 +1,12 @@
 # require 'pact_ruby_ffi/version'
 require 'ffi'
+require_relative 'detect_os'
+import OS
 # require 'json'
 # require 'httparty'
 module PactRubyFfi
   extend FFI::Library
-  ffi_lib './pact/ffi/osxaarch64/libpact_ffi.dylib'
+  ffi_lib OS.macos? './pact/ffi/libpact_ffi.so': './pact/ffi/osxaarch64/libpact_ffi.dylib'
 
   FfiSpecificationVersion = Hash[
     'SPECIFICATION_VERSION_UNKNOWN' => 0,
@@ -152,7 +154,7 @@ module PactRubyFfi
 
   ### log https://docs.rs/pact_ffi/latest/pact_ffi/log/index.html
   # Fetch the in-memory logger buffer contents. This will only have any contents if the buffer sink has been configured to log to. The contents will be allocated on the heap and will need to be freed with pactffi_string_delete.
-  attach_function :pactffi_fetch_log_buffer, %i[string],:string
+  attach_function :pactffi_fetch_log_buffer, %i[string], :string
   # # 	Convenience function to direct all logging to a task local memory buffer.
   # attach_function :pactffi_log_to_buffer, %i[],:
   # # 	Convenience function to direct all logging to a file.
@@ -165,7 +167,7 @@ module PactRubyFfi
   # # 	Apply the previously configured sinks and levels to the program. If no sinks have been setup, will set the log level to info and the target to standard out.
   attach_function :pactffi_logger_apply, [], :int
   # # 	Attach an additional sink to the thread-local logger.
-  attach_function :pactffi_logger_attach_sink, %i[string int],:string
+  attach_function :pactffi_logger_attach_sink, %i[string int], :string
   # # 	Initialize the FFI logger with no sinks.
   attach_function :pactffi_logger_init, [], :void
   attach_function :pactffi_log_message, %i[string string string], :int
