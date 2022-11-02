@@ -1,5 +1,6 @@
 require 'httparty'
 require 'pact_ruby_ffi'
+require 'fileutils'
 
 RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
   describe 'with matching requests' do
@@ -70,10 +71,12 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
 
     before do
       PactRubyFfi.pactffi_logger_init
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log-error.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
-      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
+      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
       PactRubyFfi.pactffi_logger_apply
       # PactRubyFfi.pactffi_init(PactRubyFfi::FfiLogLevel['LOG_LEVEL_INFO'])      PactRubyFfi.pactffi_with_specification(pact, PactRubyFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V3'])
       PactRubyFfi.pactffi_upon_receiving(interaction, 'A POST request to create book')
@@ -116,7 +119,7 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
         #   publicationDate: 'tommorow'
         # },
         params: {
-          hostname: 'localhost',
+          hostname: '127.0.0.1',
           path: '/api/books',
           method: 'POST',
           headers: {
@@ -193,18 +196,48 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
       }
       '
     end
+    
+    
 
     let(:mock_server_port) { PactRubyFfi.pactffi_create_mock_server_for_pact(pact, '127.0.0.1:0', false) }
     let(:pact) { PactRubyFfi.pactffi_new_pact('http-consumer-1', 'http-provider') }
     let(:interaction) { PactRubyFfi.pactffi_new_interaction(pact, 'A POST request to create book') }
 
+    # FfiLogLevelFilter = Hash[
+    #   'LOG_LEVEL_OFF' => 0,
+    #   'LOG_LEVEL_ERROR' => 1,
+    #   'LOG_LEVEL_WARN' => 2,
+    #   'LOG_LEVEL_INFO' => 3,
+    #   'LOG_LEVEL_DEBUG' => 4,
+    #   'LOG_LEVEL_TRACE' => 5
+    # ]
     before do
-      PactRubyFfi.pactffi_logger_init
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('file ./pact/logs/log-error.txt', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
-      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_INFO"])
-      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter["LOG_LEVEL_DEBUG"])
+      # create logs directory as pactffi_logger_attach_sink fails if it doesn't exist
+      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
+      # PactRubyFfi.pactffi_logger_init_with_level(PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_OFF'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-debug.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_ERROR'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-trace.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_TRACE'])
+      PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-warn.txt',
+                                             PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_WARN'])
+      # PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_OFF'])  # stack trace, cant pass this value
+      # PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_ERROR'])
+      # PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_WARN'])
+      PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
+      # PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
+      # PactRubyFfi.pactffi_logger_attach_sink('stdout', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_TRACE'])
+      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_ERROR'])
       PactRubyFfi.pactffi_logger_apply
+      PactRubyFfi.pactffi_log_message('pact_ruby', 'INFO', 'INFO ----- saf')
+      PactRubyFfi.pactffi_log_message('pact_ruby', 'DEBUG', 'DEBUG ----- saf')
+      PactRubyFfi.pactffi_log_message('pact_ruby', 'TRACE', 'TRACE ----- saf')
+      PactRubyFfi.pactffi_log_message('pact_ruby', 'WARN', 'WARN ----- saf')
+      PactRubyFfi.pactffi_log_message('pact_ruby', 'ERROR', 'ERROR ----- saf')
       # PactRubyFfi.pactffi_init(PactRubyFfi::FfiLogLevel['LOG_LEVEL_INFO'])      PactRubyFfi.pactffi_with_specification(pact, PactRubyFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V3'])
       PactRubyFfi.pactffi_upon_receiving(interaction, 'A POST request to create book')
       PactRubyFfi.pactffi_given(interaction, 'No book fixtures required')
@@ -220,8 +253,8 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
                                     'application/ld+json; charset=utf-8', response_interaction_body)
     end
     after do
-      expect(PactRubyFfi::pactffi_mock_server_matched(mock_server_port)).to be false
-      mismatchers = PactRubyFfi::pactffi_mock_server_mismatches(mock_server_port)
+      expect(PactRubyFfi.pactffi_mock_server_matched(mock_server_port)).to be false
+      mismatchers = PactRubyFfi.pactffi_mock_server_mismatches(mock_server_port)
       puts JSON.parse(mismatchers)
       expect(JSON.parse(mismatchers).length).to eql(1)
       PactRubyFfi.pactffi_cleanup_mock_server(mock_server_port)
@@ -232,7 +265,6 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
 
       options = {
 
-
         body: {
           isbn: '0099740915',
           title: 123,
@@ -241,7 +273,7 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
           publicationDate: 'tommorow'
         },
         params: {
-          hostname: 'localhost',
+          hostname: '127.0.0.1',
           path: '/api/books',
           method: 'POST',
           headers: {
@@ -253,7 +285,6 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
                                  body: options[:body].to_json,
                                  headers: { 'Content-Type' => 'application/json' }
                                })
-
     end
   end
 end
