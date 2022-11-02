@@ -5,7 +5,7 @@ RSpec.describe 'pactffi_new_plugin spec' do
   describe 'with grpcInteraction' do
     let(:contents) do
       {
-        "pact:proto": '/Users/saf/dev/you54f/pact_ruby_ffi/area_calculator/proto/area_calculator.proto',
+        "pact:proto": File.expand_path('./examples/area_calculator/proto/area_calculator.proto'),
         "pact:proto-service": 'Calculator/calculateMulti',
         "pact:content-type": 'application/protobuf',
         "request": {

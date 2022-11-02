@@ -23,6 +23,7 @@ RSpec.describe 'pactffi_new_message spec' do
 
     before do
       PactRubyFfi.pactffi_logger_init
+      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
       # if the directory doesnt exist, it blows up!
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
                                              PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
@@ -109,6 +110,7 @@ RSpec.describe 'pactffi_new_message spec' do
 
     before do
       PactRubyFfi.pactffi_logger_init
+      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
                                              PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',

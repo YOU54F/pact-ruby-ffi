@@ -46,6 +46,7 @@ RSpec.describe 'pactffi_create_mock_server spec' do
     before do
       # PactRubyFfi.pactffi_init_with_log_level('oso')
       PactRubyFfi.pactffi_logger_init
+      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
                                              PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',
@@ -75,6 +76,7 @@ RSpec.describe 'pactffi_create_mock_server spec' do
   describe 'with mismatching requests' do
     before do
       PactRubyFfi.pactffi_logger_init
+      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
                                              PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',

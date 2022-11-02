@@ -1,6 +1,5 @@
 #!/bin/bash -eu
 
 ./script/download-libs.sh
-mkdir -p logs
 rake spec
-ruby lib/detect_os.rb
+# rspec examples/area_calculator/spec/pactffi_create_plugin_pact_spec.rb

@@ -20,18 +20,19 @@ jobs:
           ruby-version: '3.0.4'
       - run: ./script/download-libs.sh
         shell: bash
-      - run: ls pact/ffi
-        shell: bash
-      - run: ls pact/ffi/windows
-        shell: bash
-      - run: mkdir -p logs
-        shell: bash
       - run: gem update bundler
         shell: bash
       - run: bundle install
         shell: bash
       - run: rake spec
         shell: bash
+      - run: 
+         pact/plugin/pact-plugin-cli -y install https://github.com/pactflow/pact-protobuf-plugin/releases/latest
+        shell: bash
+      - run: rspec examples/area_calculator/spec/pactffi_create_plugin_pact_spec.rb
+        shell: bash
+
+
 
   # act:
   #   runs-on: ubuntu-latest
@@ -39,10 +40,10 @@ jobs:
   #     - uses: actions/checkout@v3
   #     - run: apt-get update -y  && apt-get install -y ruby-full
   #     - run: ./script/download-libs.sh
-  #     - run: mkdir -p logs
   #     - run: gem update bundler
   #     - run: bundle install
   #     - run: rake spec
+  #     - run: rspec examples/area_calculator/spec/pactffi_create_plugin_pact_spec.rb
 
 
 
@@ -56,18 +57,6 @@ jobs:
 
 
 
-
-
-
-
-
-
-
-
-
-
-      # - run: cd pact/ffi && tree -f -L 8
-      # - run: apt-get update -y  && apt-get install -y ruby-full
 
 
         # - name: "Installing Pact CLI Tools"

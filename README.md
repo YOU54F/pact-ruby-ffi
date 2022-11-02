@@ -1,8 +1,6 @@
 # PactRubyFfi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pact_ruby_ffi`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Ruby spike gem, to show interactions with the Pact Rust FFI methods.
 
 ## Installation
 
@@ -14,25 +12,38 @@ gem 'pact_ruby_ffi'
 
 And then execute:
 
-    $ bundle
+    bundle
 
 Or install it yourself as:
 
-    $ gem install pact_ruby_ffi
+    gem install pact_ruby_ffi
 
 ## Usage
 
 TODO: Write usage instructions here
 
+## Pre-Reqs
+
+- Ruby
+  - This gem is compatible with `3.0`
+
+- FFI libraries for your current platform - run `./script/download-libs.sh` to download
+- If testing the protobuf plugin
+  - `2.7` for protobuf/grpc example
+    - See https://grpc.io/docs/languages/ruby/quickstart/ for steps
+    - See `examples/proto-ruby/README.md` for notes
+    - ruby-grpc is not currently, on m1 hardware for the `pact-protobuf-plugin` example
+    - Have the pact-protobuf plugin available
+      - Run `pact-plugin-cli -y install https://github.com/pactflow/pact-protobuf-plugin/releases/latest`
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+- run `bin/setup` or `bundle install` to install dependencies
+- run `./script/download-libs.sh` to download FFI libraries for your current platform
+- run `rake spec` to run tests
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pact_ruby_ffi. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at <https://github.com/[USERNAME>]/pact_ruby_ffi. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 

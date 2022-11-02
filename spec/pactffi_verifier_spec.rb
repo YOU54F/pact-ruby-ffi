@@ -5,6 +5,7 @@ RSpec.describe 'pactffi verifier spec' do
   describe 'with mismatching requests' do
     before do
       PactRubyFfi.pactffi_logger_init
+      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
                                              PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',

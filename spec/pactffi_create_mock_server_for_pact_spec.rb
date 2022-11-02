@@ -71,6 +71,7 @@ RSpec.describe 'pactffi_create_mock_server_for_pact spec' do
 
     before do
       PactRubyFfi.pactffi_logger_init
+      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
                                              PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
       PactRubyFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',

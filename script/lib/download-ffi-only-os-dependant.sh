@@ -61,15 +61,17 @@ case ${detected_os} in
 'Darwin arm64')
     echo "downloading of osx aarch64 FFI libs"
     download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "osxaarch64/libpact_ffi.dylib.gz"
+    os='osx-aarch64'
     ;;
 'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
     echo "downloading of osx x86_64 FFI libs"
     download_ffi "osx-x86_64.dylib.gz" "lib" "libpact_ffi.dylib.gz"
+    os='osx-x86_64'
     ;;
 "Linux aarch64"* | "Linux arm64"*)
     echo "downloading of linux aarch64 FFI libs"
     download_ffi "linux-aarch64.so.gz" "lib" "linuxaarch64/libpact_ffi.so.gz"
-    os='linux-x86_64'
+    os='linux-aarch64'
     ;;
 'Linux x86_64' | "Linux"*)
     echo "downloading of linux x86_64 FFI libs"
@@ -80,6 +82,7 @@ case ${detected_os} in
     echo "downloading of windows x86_64 FFI libs"
     download_ffi "windows-x86_64.dll.gz" "" "pact_ffi.dll.gz"
     download_ffi "windows-x86_64.dll.lib.gz" "" "pact_ffi.dll.lib.gz"
+    os='win32'
     ;;
   *)
   echo "Sorry, you'll need to install the pact-ruby-standalone manually."
