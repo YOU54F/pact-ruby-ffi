@@ -10,11 +10,6 @@ require_env_var FFI_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
 FFI_DIR="${LIB_DIR}/../../pact/ffi"
-mkdir -p "$FFI_DIR/osxaarch64"
-mkdir -p "$FFI_DIR/linuxaarch64"
-mkdir -p "$FFI_DIR/osxx8664"
-mkdir -p "$FFI_DIR/linuxx8664"
-mkdir -p "$FFI_DIR/windows"
 
 if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
   log "Skipping download of FFI libraries ${FFI_VERSION}, as they exist"
@@ -22,7 +17,7 @@ if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
 fi
 
 warn "Cleaning ffi directory $FFI_DIR"
-rm -rf "${FFI_DIR:?}/*"
+rm -rf "${FFI_DIR:?}"
 mkdir -p "$FFI_DIR/osxaarch64"
 mkdir -p "$FFI_DIR/linuxaarch64"
 
@@ -60,17 +55,38 @@ function download_ffi {
   gunzip "$DOWNLOAD_LOCATION"
 }
 
-if [ -z "${ONLY_DOWNLOAD_PACT_FOR_WINDOWS:-}" ]; then
-  download_ffi "linux-x86_64.so.gz" "lib" "linuxx8664/libpact_ffi.so.gz"
-  download_ffi "linux-aarch64.so.gz" "lib" "linuxaarch64/libpact_ffi.so.gz"
-  download_ffi "osx-x86_64.dylib.gz" "lib" "osxx8664/libpact_ffi.dylib.gz"
-  download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "osxaarch64/libpact_ffi.dylib.gz"
-else
-  warn "Skipped download of non-windows FFI libs because ONLY_DOWNLOAD_PACT_FOR_WINDOWS is set"
-fi
-
-download_ffi "windows-x86_64.dll.gz" "" "windows/pact_ffi.dll.gz"
-download_ffi "windows-x86_64.dll.lib.gz" "" "windows/pact_ffi.dll.lib.gz"
+detected_os=$(uname -sm)
+echo detected_os = $detected_os
+case ${detected_os} in
+'Darwin arm64')
+    echo "downloading of osx aarch64 FFI libs"
+    download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "osxaarch64/libpact_ffi.dylib.gz"
+    ;;
+'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
+    echo "downloading of osx x86_64 FFI libs"
+    download_ffi "osx-x86_64.dylib.gz" "lib" "libpact_ffi.dylib.gz"
+    ;;
+"Linux aarch64"* | "Linux arm64"*)
+    echo "downloading of linux aarch64 FFI libs"
+    download_ffi "linux-aarch64.so.gz" "lib" "linuxaarch64/libpact_ffi.so.gz"
+    os='linux-x86_64'
+    ;;
+'Linux x86_64' | "Linux"*)
+    echo "downloading of linux x86_64 FFI libs"
+    download_ffi "linux-x86_64.so.gz" "lib" "libpact_ffi.so.gz"
+    os='linux-x86_64'
+    ;;
+"Windows"* | "MINGW64"*)
+    echo "downloading of windows x86_64 FFI libs"
+    download_ffi "windows-x86_64.dll.gz" "" "pact_ffi.dll.gz"
+    download_ffi "windows-x86_64.dll.lib.gz" "" "pact_ffi.dll.lib.gz"
+    ;;
+  *)
+  echo "Sorry, you'll need to install the pact-ruby-standalone manually."
+  echo "or add your os to the list"
+  exit 1
+    ;;
+esac
 
 download_ffi_file "pact.h" "pact.h"
 download_ffi_file "pact-cpp.h" "pact-cpp.h"
