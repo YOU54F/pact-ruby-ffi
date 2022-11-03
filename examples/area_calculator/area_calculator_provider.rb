@@ -36,6 +36,7 @@ class AreaCalculatorServer < AreaCalculator::Calculator::Service
   end
 
   def shape_message(message)
+    puts message
     case message.shape.to_s
     when 'rectangle'
       message.rectangle.length.to_f * message.rectangle.width.to_f
@@ -58,7 +59,7 @@ end
 # server port.
 def main
   s = GRPC::RpcServer.new
-  s.add_http2_port('0.0.0.0:50051', :this_port_is_insecure)
+  s.add_http2_port('0.0.0.0:37757', :this_port_is_insecure)
   s.handle(AreaCalculatorServer)
   # Runs the server with SIGHUP, SIGINT and SIGTERM signal handlers to
   #   gracefully shutdown.
