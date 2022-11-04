@@ -5,5 +5,4 @@ source 'https://rubygems.org/'
 
 gemspec
 
-gem "google-protobuf", "~> 3.21"
 gem 'pact_ruby_ffi', :path => '../../'

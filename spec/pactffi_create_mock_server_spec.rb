@@ -1,5 +1,6 @@
 require 'httparty'
 require 'pact_ruby_ffi'
+require 'fileutils'
 
 RSpec.describe 'pactffi_create_mock_server spec' do
   describe 'with matching requests' do
@@ -64,7 +65,6 @@ RSpec.describe 'pactffi_create_mock_server spec' do
     end
 
     it 'executes the pact test with no errors' do
-    skip
       puts "Mock server port=#{mock_server_port}"
 
       response = HTTParty.get("http://127.0.0.1:#{mock_server_port}/mallory?name=ron&status=good")
@@ -151,7 +151,6 @@ RSpec.describe 'pactffi_create_mock_server spec' do
     end
 
     it 'returns the mismatches' do
-    skip
       puts "Mock server port=#{mock_server_port}"
 
       expect(PactRubyFfi.pactffi_mock_server_matched(mock_server_port)).to be false

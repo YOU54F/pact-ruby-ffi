@@ -29,11 +29,11 @@ function download_standalone {
   log "Downloading standalone version $STANDALONE_VERSION to $DOWNLOAD_LOCATION"
   download_to "$URL" "$DOWNLOAD_LOCATION"
   if [ "${STANDALONE_FILENAME%zip}" != "${STANDALONE_FILENAME}" ]; then
-    unzip -qo "$DOWNLOAD_LOCATION" -d "${DOWNLOAD_LOCATION%.*}"
+    unzip -qo "$DOWNLOAD_LOCATION" -d "${STANDALONE_DIR}"
     rm "${DOWNLOAD_LOCATION}"
   else
-    mkdir -p "${DOWNLOAD_LOCATION%.tar.gz}"
-    tar -xf "$DOWNLOAD_LOCATION" -C "${DOWNLOAD_LOCATION%.tar.gz}"
+    mkdir -p "${STANDALONE_DIR}"
+    tar -xf "$DOWNLOAD_LOCATION" -C "${STANDALONE_DIR}"
     rm "${DOWNLOAD_LOCATION}"
   fi
 }

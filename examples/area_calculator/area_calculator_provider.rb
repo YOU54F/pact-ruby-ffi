@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 # Copyright 2015 gRPC authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -64,7 +63,18 @@ def main
   # Runs the server with SIGHUP, SIGINT and SIGTERM signal handlers to
   #   gracefully shutdown.
   # User could also choose to run server via call to run_till_terminated
-  s.run_till_terminated_or_interrupted([1, 'int', 'SIGTERM'])
+  if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RbConfig::CONFIG['arch']) != nil
+    s.run_till_terminated
+  else
+    s.run_till_terminated_or_interrupted([1, 'int', 'SIGTERM']) # this works on ubuntu/macos but fails on windows
+  end
+  # Commit:- https://github.com/grpc/grpc/pull/17348/files#diff-54d9f77d21e4422e6c3973c2bf1b1ddea7070b4aa67025cef3d70da6e4dfca80
+  #   C:/hostedtoolcache/windows/Ruby/2.7.6/x64/lib/ruby/gems/2.7.0/gems/grpc-1.50.0-x64-mingw32/src/ruby/lib/grpc/generic/rpc_server.rb:408:in `block in run_till_terminated_or_interrupted': 1 not a valid signal (RuntimeError)
+  # 	from C:/hostedtoolcache/windows/Ruby/2.7.6/x64/lib/ruby/gems/2.7.0/gems/grpc-1.50.0-x64-mingw32/src/ruby/lib/grpc/generic/rpc_server.rb:392:in `each'
+  # 	from C:/hostedtoolcache/windows/Ruby/2.7.6/x64/lib/ruby/gems/2.7.0/gems/grpc-1.50.0-x64-mingw32/src/ruby/lib/grpc/generic/rpc_server.rb:392:in `run_till_terminated_or_interrupted'
+  # 	from examples/area_calculator/area_calculator_provider.rb:67:in `main'
+  # 	from examples/area_calculator/area_calculator_provider.rb:70:in `<main>'
+  # make[2]: *** [Makefile:51: start_demo_gprc_provider] Error 1
 end
 
 main

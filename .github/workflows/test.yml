@@ -5,79 +5,115 @@ on:
   workflow_dispatch:
 
 jobs:
-
-  github:
+  test_ffi:
     timeout-minutes: 10
     strategy:
       matrix:
-        os: [ubuntu-latest,windows-latest,macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: false
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.0.4'
-      - run: ./script/download-libs.sh
-        shell: bash
+          ruby-version: "3.0.4"
       - run: gem update bundler
+      - run: make install
+      - run: make download_libs
+      # - run: make test
+      - run: make test_message_pact
+      - run: make show_message_pact
+      - run: make test_pactffi_create_mock_server_for_pact
+      - run: make show_pactffi_create_mock_server_for_pact
+      - run: make test_pactffi_create_mock_server
+        if: runner.os == 'Linux' # Fails on windows/mac runners in CI
+      - run: make show_pactffi_create_mock_server
+        if: runner.os == 'Linux'
+      # - run: make start_broker
+      #   if: runner.os == 'Linux'
+      # # - run: make wait_for_broker
+      # #   if: runner.os == 'Linux'
+      # - run: make publish_pacts
+      #   if: runner.os == 'Linux'
+      #   env:
+      #     PACT_BROKER_USERNAME: pact
+      #     PACT_BROKER_PASSWORD: pact
+      #     PACT_BROKER_BASE_URL: http://0.0.0.0:8000
+      #   # Docker is not available in osx/win
+      #   # so we will publish to pactflow
+      - run: make publish_pacts
+        # if: runner.os != 'Linux'
+        env:
+          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+      # - run: make stop_broker
+      #   if: runner.os == 'Linux'
+  
+  
+  grpc_demo_protobuf_plugin:
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
         shell: bash
-      - run: bundle install
-        shell: bash
-      - run: rake spec
-        shell: bash
-      - run: 
-         pact/plugin/pact-plugin-cli -y install https://github.com/pactflow/pact-protobuf-plugin/releases/latest
-        shell: bash
-      - run: rspec examples/area_calculator/spec/pactffi_create_plugin_pact_spec.rb
-        shell: bash
-
-
-
-  # act:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: apt-get update -y  && apt-get install -y ruby-full
-  #     - run: ./script/download-libs.sh
-  #     - run: gem update bundler
-  #     - run: bundle install
-  #     - run: rake spec
-  #     - run: rspec examples/area_calculator/spec/pactffi_create_plugin_pact_spec.rb
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # - name: "Installing Pact CLI Tools"
-      #   run: |
-      #     echo "Installing Pact CLI Tools"
-      #     echo "=> downloading Pact CLI Tools"
-      #     os='linux-x86_64'
-      #     tag=$(basename $(curl -fs -o/dev/null -w %{redirect_url} https://github.com/pact-foundation/pact-ruby-standalone/releases/latest))
-      #     filename="pact-${tag#v}-${os}.tar.gz"
-      #     standalone_download_path=https://github.com/pact-foundation/pact-ruby-standalone/releases/download/${tag}/${filename}
-      #     echo "from ${standalone_download_path}"
-      #     curl -LO ${standalone_download_path}
-      #     tar xzf ${filename}
-      #     rm ${filename}
-      #     echo "PATH=${PATH}:${PWD}/pact/bin/" >> $GITHUB_ENV
-      # - run: pact help
-      # - name: Start OSS Pact Broker
-      #   run: docker-compose up -d pact-broker
-
-
-            # - run: pact-broker publish pacts --auto-detect-version-properties --consumer-app-version $(git rev-parse HEAD)
-      # - name: Stop OSS Pact Broker
-      #   if: always()
-      #   run: docker-compose down
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with: # gRPC demo requires Ruby < 3.0
+          ruby-version: "2.7.6"
+      - run: gem update bundler
+      - run: make install
+      - run: make download_libs
+      - run: make install_protobuf_plugin
+      - run: make install_demo_grpc
+      - run: make test_demo_gprc_pact
+      - run: make show_demo_gprc_pact
+      - run: make verify_demo_gprc_local
+      # - run: make start_broker
+      #   if: runner.os == 'Linux'
+      # # - run: make wait_for_broker
+      # #   if: runner.os == 'Linux'
+      # - run: make publish_pacts
+      #   if: runner.os == 'Linux'
+      #   env:
+      #     PACT_BROKER_USERNAME: pact
+      #     PACT_BROKER_PASSWORD: pact
+      #     PACT_BROKER_BASE_URL: http://localhost:8000
+      # - run: make verify_demo_gprc_publish_broker
+      #   if: runner.os == 'Linux'
+      #   env:
+      #     PACT_BROKER_USERNAME: pact
+      #     PACT_BROKER_PASSWORD: pact
+      #     PACT_BROKER_BASE_URL: http://localhost:8000
+      # - run: make verify_demo_gprc_fetch_broker
+      #   if: runner.os == 'Linux'
+      #   env:
+      #     PACT_BROKER_USERNAME: pact
+      #     PACT_BROKER_PASSWORD: pact
+      #     PACT_BROKER_BASE_URL: http://localhost:8000
+      #   # Docker is not available in osx/win
+      #   # so we will publish to pactflow
+      - run: make publish_pacts
+        # if: runner.os != 'Linux'
+        env:
+          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+      - run: make verify_demo_gprc_publish_broker
+        # if: runner.os != 'Linux'
+        env:
+          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+      - run: make verify_demo_gprc_fetch_broker
+        # if: runner.os != 'Linux'
+        env:
+          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+      # - run: make stop_broker
+        # if: runner.os == 'Linux'

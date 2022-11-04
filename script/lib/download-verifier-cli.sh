@@ -6,21 +6,21 @@ LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)" # Figure out where the scr
 require_binary curl
 require_binary gunzip
 
-require_env_var PLUGIN_CLI_VERSION
+require_env_var VERIFIER_CLI_VERSION
 
-BASEURL=https://github.com/pact-foundation/pact-plugins/releases/download
-PLUGIN_CLI_DIR="${LIB_DIR}/../../pact/plugin"
+BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
+VERIFIER_CLI_DIR="${LIB_DIR}/../../pact/verifier"
 
-if [[ $(find "${PLUGIN_CLI_DIR}" -name "${PLUGIN_CLI_VERSION}*") ]]; then
-  log "Skipping download of plugin cli ${PLUGIN_CLI_VERSION}, if it exists"
+if [[ $(find "${VERIFIER_CLI_DIR}" -name "${VERIFIER_CLI_VERSION}*") ]]; then
+  log "Skipping download of verifier cli ${VERIFIER_CLI_VERSION}, if it exists"
   exit 0
 fi
 
-warn "Cleaning plugin directory $PLUGIN_CLI_DIR"
-rm -rf "${PLUGIN_CLI_DIR:?}"
-mkdir -p $PLUGIN_CLI_DIR
+warn "Cleaning verifier directory $VERIFIER_CLI_DIR"
+rm -rf "${VERIFIER_CLI_DIR:?}"
+mkdir -p $VERIFIER_CLI_DIR
 
-function download_plugin_cli_file {
+function download_verifier_cli_file {
   if [ -z "${1:-}" ]; then
     error "${FUNCNAME[0]} requires the filename to download"
     exit 1
@@ -29,18 +29,18 @@ function download_plugin_cli_file {
     error "${FUNCNAME[0]} requires the output filename to download"
     exit 1
   fi
-  PLUGIN_CLI_FILENAME="$1"
+  VERIFIER_CLI_FILENAME="$1"
   OUTPUT_FILENAME="$2"
 
-  URL="${BASEURL}/pact-plugin-cli-${PLUGIN_CLI_VERSION}/${PLUGIN_CLI_FILENAME}"
-  DOWNLOAD_LOCATION="$PLUGIN_CLI_DIR/${OUTPUT_FILENAME}"
+  URL="${BASEURL}/pact_verifier_cli-${VERIFIER_CLI_VERSION}/${VERIFIER_CLI_FILENAME}"
+  DOWNLOAD_LOCATION="$VERIFIER_CLI_DIR/${OUTPUT_FILENAME}"
 
-  log "Downloading plugin cli $PLUGIN_CLI_VERSION for $PLUGIN_CLI_FILENAME"
+  log "Downloading verifier cli $VERIFIER_CLI_VERSION for $VERIFIER_CLI_FILENAME"
   download_to "$URL" "$DOWNLOAD_LOCATION"
   log " ... downloaded to '$DOWNLOAD_LOCATION'"
 }
 
-function download_plugin_cli {
+function download_verifier_cli {
   if [ -z "${1:-}" ]; then
     error "${FUNCNAME[0]} requires the environment filename suffix"
     exit 1
@@ -51,18 +51,18 @@ function download_plugin_cli {
   OS="${4:-}"
   log "${PREFIX}pact_ffi-$SUFFIX" "${OUTPUT_FILENAME}"
 
-  download_plugin_cli_file "${PREFIX}pact-plugin-cli-$SUFFIX" "${OUTPUT_FILENAME}"
+  download_verifier_cli_file "${PREFIX}pact_verifier_cli-$SUFFIX" "${OUTPUT_FILENAME}"
   log " ... unzipping '$DOWNLOAD_LOCATION'"
   gunzip "${DOWNLOAD_LOCATION}"
 
 
   case ${OS} in
   win32)
-  "$PLUGIN_CLI_DIR"/pact-plugin-cli.exe --help
+  "$VERIFIER_CLI_DIR"/pact_verifier_cli.exe --help
   ;;
   *)
-  chmod +x "$PLUGIN_CLI_DIR"/pact-plugin-cli
-  "$PLUGIN_CLI_DIR"/pact-plugin-cli --help
+  chmod +x "$VERIFIER_CLI_DIR"/pact_verifier_cli
+  "$VERIFIER_CLI_DIR"/pact_verifier_cli --help
   ;;
   esac
 
@@ -74,27 +74,27 @@ case ${detected_os} in
 'Darwin arm64')
     echo "downloading of osx aarch64 FFI libs"
     os='osx-aarch64'
-    download_plugin_cli "osx-aarch64.gz" "" "pact-plugin-cli.gz" "${os}"
+    download_verifier_cli "osx-aarch64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
     echo "downloading of osx x86_64 FFI libs"
     os='osx-x86_64'
-    download_plugin_cli "osx-x86_64.gz" "" "pact-plugin-cli.gz" "${os}"
+    download_verifier_cli "osx-x86_64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 "Linux aarch64"* | "Linux arm64"*)
     echo "downloading of linux aarch64 FFI libs"
     os='linux-aarch64'
-    download_plugin_cli "linux-aarch64.gz" "" "pact-plugin-cli.gz" "${os}"
+    download_verifier_cli "linux-aarch64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 'Linux x86_64' | "Linux"*)
     echo "downloading of linux x86_64 FFI libs"
     os='linux-x86_64'
-    download_plugin_cli "linux-x86_64.gz" "" "pact-plugin-cli.gz" "${os}"
+    download_verifier_cli "linux-x86_64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 "Windows"* | "MINGW64"*)
     echo "downloading of windows x86_64 FFI libs"
     os='win32'
-    download_plugin_cli "windows-x86_64.exe.gz" "" "pact-plugin-cli.exe.gz" "${os}"
+    download_verifier_cli "windows-x86_64.exe.gz" "" "pact_verifier_cli.exe.gz" "${os}"
     ;;
   *)
   echo "Sorry, you'll need to install the pact-ruby-standalone manually."
@@ -104,9 +104,9 @@ case ${detected_os} in
 esac
 
 
-# Write readme in the plugin folder
-cat << EOF > "$PLUGIN_CLI_DIR/README.md"
-# Pact plugin cli
+# Write readme in the verifier folder
+cat << EOF > "$VERIFIER_CLI_DIR/README.md"
+# Pact verifier cli
 
-This folder is automatically populated during build by /script/download-plugin-cli.sh
+This folder is automatically populated during build by /script/download-verifier-cli.sh
 EOF

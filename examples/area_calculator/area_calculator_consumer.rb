@@ -25,29 +25,47 @@ $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 require 'grpc'
 require 'area_calculator_services_pb'
 require 'json'
-def main
-  # user = ARGV.size > 0 ?  ARGV[0] : 'world'
-  # hostname = ARGV.size > 1 ?  ARGV[1] : 'localhost:50051'
-  hostname = 'localhost:50051'
-  stub = AreaCalculator::Calculator::Stub.new(hostname, :this_channel_is_insecure)
-  begin
-    message = stub.calculate_one(AreaCalculator::ShapeMessage.new({
-                                                                   "triangle": {
-                                                                     "edge_a": 10,
-                                                                     "edge_b": 10,
-                                                                     "edge_c": 10,
-                                                                   }
-                                                                  })).value
-    # message = stub.calculate_one(AreaCalculator::ShapeMessage.new({
-    #                                                                "rectangle": {
-    #                                                                  "length": 3,
-    #                                                                  "width": 3
-    #                                                                }
-    #                                                               })).value
-    p "Area: #{message}"
+
+module AreaCalculatorConsumer
+  def self.get_triangle_area(address)
+    # Set up a connection to the server.
+    stub = AreaCalculator::Calculator::Stub.new(address, :this_channel_is_insecure)
+    begin
+      triangle = {
+        "triangle": {
+          "edge_a": 10,
+          "edge_b": 10,
+          "edge_c": 10
+        }
+      }
+      p 'Sending calculate triangle area request'
+      message = stub.calculate_one(AreaCalculator::ShapeMessage.new(triangle)).value
+      p "Area: #{message[0]}"
+      message[0]
+    end
+  end
+
+  def self.get_rectangle_area(address)
+    # Set up a connection to the server.
+    stub = AreaCalculator::Calculator::Stub.new(address, :this_channel_is_insecure)
+    begin
+      rectangle = {
+        "rectangle": {
+          "length": 3,
+          "width": 4
+        }
+      }
+      p 'Sending calculate rectangle area request'
+      message = stub.calculate_one(AreaCalculator::ShapeMessage.new(rectangle)).value
+      p "Area: #{message[0]}"
+      message
+    end
+  end
+
+  def self.main
+    hostname = 'localhost:37757'
+    get_triangle_area(hostname)
   rescue GRPC::BadStatus => e
     abort "ERROR: #{e.message}"
   end
 end
-
-main

@@ -1,5 +1,6 @@
 require 'httparty'
 require 'pact_ruby_ffi'
+require 'fileutils'
 
 RSpec.describe 'pactffi_new_message spec' do
   describe 'with matching requests' do

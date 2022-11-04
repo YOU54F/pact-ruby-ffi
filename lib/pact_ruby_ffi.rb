@@ -1,9 +1,11 @@
 # require 'pact_ruby_ffi/version'
 require 'ffi'
 require 'detect_os'
+
 module PactRubyFfi
   extend FFI::Library
   ffi_lib DetectOS.get_bin_path
+
 
   FfiSpecificationVersion = Hash[
     'SPECIFICATION_VERSION_UNKNOWN' => 0,

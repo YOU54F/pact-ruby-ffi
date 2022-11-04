@@ -1,8 +1,9 @@
 require 'httparty'
 require 'pact_ruby_ffi'
+require 'fileutils'
 
 RSpec.describe 'pactffi verifier spec' do
-  describe 'with mismatching requests' do
+  describe 'with mismatching requests', :skip  do
     before do
       PactRubyFfi.pactffi_logger_init
       FileUtils.mkdir_p 'logs' unless File.directory?('logs')
@@ -20,13 +21,11 @@ RSpec.describe 'pactffi verifier spec' do
     end
     let(:verifier) { PactRubyFfi.pactffi_verifier_new_for_application('pact-ruby', '1.0.0') }
     it 'executes the pact verifier with no information and fails 1' do
-      skip
       PactRubyFfi.pactffi_verifier_set_provider_info(verifier, 'http-provider', 'http', '127.0.0.1', 8000, '/')
       result = PactRubyFfi.pactffi_verifier_execute(verifier)
       expect(result).not_to be PactRubyFfi::FfiVerifyProviderResponse['VERIFICATION_SUCCESSFUL']
     end
     it 'executes the pact verifier with no information and fails 2' do
-      skip
       PactRubyFfi.pactffi_verifier_set_filter_info(verifier, '', 'book', false)
       PactRubyFfi.pactffi_verifier_set_provider_state(verifier, 'http://127.0.0.1:8000/change-state', true, true)
       PactRubyFfi.pactffi_verifier_set_verification_options(verifier, false, 5000)
@@ -42,7 +41,6 @@ RSpec.describe 'pactffi verifier spec' do
       expect(result).not_to be PactRubyFfi::FfiVerifyProviderResponse['VERIFICATION_SUCCESSFUL']
     end
     it 'executes the pact verifier with no information and fails 3' do
-      skip
       PactRubyFfi.pactffi_verifier_set_filter_info(verifier, '', 'book', false)
       PactRubyFfi.pactffi_verifier_set_provider_state(verifier, 'http://127.0.0.1:8000/change-state', true, true)
       PactRubyFfi.pactffi_verifier_set_verification_options(verifier, false, 5000)

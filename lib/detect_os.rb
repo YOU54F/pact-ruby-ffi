@@ -58,6 +58,21 @@ module DetectOS
       raise "Detected #{RbConfig::CONFIG['arch']}-- I have no idea what to do with that."
     end
   end
+  def self.get_os
+    if windows?
+      'win'
+    elsif mac_arm?
+      'osxaarch64'
+    elsif mac?
+      'linux-x8664'
+    elsif linux_arm?
+      'linux-aarch64'
+    elsif linux?
+      'linux-x8664'
+    else
+      raise "Detected #{RbConfig::CONFIG['arch']}-- I have no idea what to do with that."
+    end
+  end
 end
 
 puts DetectOS.get_bin_path
