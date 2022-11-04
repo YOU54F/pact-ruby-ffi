@@ -22,3 +22,7 @@ https://grpc.io/docs/languages/ruby/quickstart/#grpc-tools
 7. terminal 2 `ruby greeter_client.rb`
 8. `grpc_tools_ruby_protoc -I ../protos --ruby_out=lib --grpc_out=lib ../protos/helloworld.proto`
 9. `grpc_tools_ruby_protoc -I ./proto --ruby_out=area_calc_server --grpc_out=area_calc_server ./proto/area_calculator.proto`
+
+
+https://grpc.io/docs/protoc-installation/
+`apt install -y protobuf-compiler`

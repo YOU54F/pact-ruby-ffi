@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- area_calculator*.rb`.split("\n").map do |f|
     File.basename(f)
   end
-  s.require_paths = ['lib','../../lib']
+  s.require_paths = ['lib']
   s.platform      = Gem::Platform::RUBY
 
   s.add_dependency 'google-protobuf', '~> 3.21'
