@@ -96,7 +96,7 @@ RSpec.describe 'pactffi_new_plugin spec' do
       PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
       PactRubyFfi.pactffi_logger_apply
       PactRubyFfi.pactffi_log_message('pact_ruby', 'INFO', 'pact ruby grpc is alive')
-      PactRubyFfi.pactffi_using_plugin(pact, 'protobuf', '0.1.15')
+      PactRubyFfi.pactffi_using_plugin(pact, 'protobuf', '0.1.16')
     end
     after do
       result = PactRubyFfi.pactffi_mock_server_matched(mock_server_port)
