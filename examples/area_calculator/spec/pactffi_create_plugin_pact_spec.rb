@@ -92,10 +92,10 @@ RSpec.describe 'pactffi_new_plugin spec' do
 
     before do
       PactRubyFfi.pactffi_with_pact_metadata(pact, 'pact-ruby', 'ffi', PactRubyFfi.pactffi_version)
-      # PactRubyFfi.pactffi_logger_init
-      # PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
-      # PactRubyFfi.pactffi_logger_apply
-      # PactRubyFfi.pactffi_log_message('pact_ruby', 'INFO', 'pact ruby grpc is alive')
+      PactRubyFfi.pactffi_logger_init
+      PactRubyFfi.pactffi_logger_attach_sink('stderr', PactRubyFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
+      PactRubyFfi.pactffi_logger_apply
+      PactRubyFfi.pactffi_log_message('pact_ruby', 'INFO', 'pact ruby grpc is alive')
       PactRubyFfi.pactffi_using_plugin(pact, 'protobuf', '0.1.16')
     end
     after do
