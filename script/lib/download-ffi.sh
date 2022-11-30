@@ -9,7 +9,7 @@ require_binary gunzip
 require_env_var FFI_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
-FFI_DIR="${LIB_DIR}/../../pact/ffi"
+FFI_DIR="${HOME}/.pact/ffi"
 mkdir -p "$FFI_DIR/osxaarch64"
 mkdir -p "$FFI_DIR/linuxaarch64"
 mkdir -p "$FFI_DIR/osxx8664"

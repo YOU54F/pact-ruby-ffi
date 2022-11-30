@@ -175,8 +175,9 @@ module PactRubyFfi
   # Plugins
   ### plugins	The plugins module provides exported functions using C bindings for using plugins with Pact tests.
   #	Add a plugin to be used by the test. The plugin needs to be installed correctly for this function to work.
-  attach_function :pactffi_using_plugin, %i[pointer string string], :void
+  attach_function :pactffi_using_plugin, %i[pointer string string], :int
   attach_function :pactffi_new_async_message, %i[pointer string], :pointer
+  attach_function :pactffi_new_message_interaction, %i[pointer string], :pointer
   attach_function :pactffi_new_sync_message_interaction, %i[pointer string], :pointer
   # # 	Create a mock server for the provided Pact handle and transport. If the transport is not provided (it is a NULL pointer or an empty string), will default to an HTTP transport. The address is the interface bind to, and will default to the loopback adapter if not specified. Specifying a value of zero for the port will result in the operating system allocating the port.
   attach_function :pactffi_create_mock_server_for_transport, %i[pointer string uint string string], :int

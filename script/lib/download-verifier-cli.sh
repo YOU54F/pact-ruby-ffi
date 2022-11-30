@@ -9,7 +9,7 @@ require_binary gunzip
 require_env_var VERIFIER_CLI_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
-VERIFIER_CLI_DIR="${LIB_DIR}/../../pact/verifier"
+VERIFIER_CLI_DIR="${HOME}/.pact/cli/verifier"
 
 if [[ $(find "${VERIFIER_CLI_DIR}" -name "${VERIFIER_CLI_VERSION}*") ]]; then
   log "Skipping download of verifier cli ${VERIFIER_CLI_VERSION}, if it exists"

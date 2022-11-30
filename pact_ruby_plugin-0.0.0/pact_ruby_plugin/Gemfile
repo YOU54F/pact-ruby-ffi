@@ -1,0 +1,9 @@
+# -*- ruby -*-
+# encoding: utf-8
+
+source 'https://rubygems.org/'
+
+gemspec
+
+
+gem 'pact_ruby_ffi', :path => '../../'

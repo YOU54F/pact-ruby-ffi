@@ -22,36 +22,21 @@ jobs:
           ruby-version: "3.0.4"
       - run: gem update bundler
       - run: make install
+      - run: rake build
       - run: make download_libs
-      # - run: make test
       - run: make test_message_pact
       - run: make show_message_pact
       - run: make test_pactffi_create_mock_server_for_pact
       - run: make show_pactffi_create_mock_server_for_pact
       - run: make test_pactffi_create_mock_server
-        if: runner.os == 'Linux' # Fails on windows/mac runners in CI
+        if: runner.os == 'Linux'
       - run: make show_pactffi_create_mock_server
         if: runner.os == 'Linux'
-      # - run: make start_broker
-      #   if: runner.os == 'Linux'
-      # # - run: make wait_for_broker
-      # #   if: runner.os == 'Linux'
-      # - run: make publish_pacts
-      #   if: runner.os == 'Linux'
-      #   env:
-      #     PACT_BROKER_USERNAME: pact
-      #     PACT_BROKER_PASSWORD: pact
-      #     PACT_BROKER_BASE_URL: http://0.0.0.0:8000
-      #   # Docker is not available in osx/win
-      #   # so we will publish to pactflow
       - run: make publish_pacts
-        # if: runner.os != 'Linux'
         env:
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
           PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
-      # - run: make stop_broker
-      #   if: runner.os == 'Linux'
-  
+
   
   grpc_demo_protobuf_plugin:
     timeout-minutes: 10
@@ -76,44 +61,16 @@ jobs:
       - run: make test_demo_gprc_pact
       - run: make show_demo_gprc_pact
       - run: make verify_demo_gprc_local
-      # - run: make start_broker
-      #   if: runner.os == 'Linux'
-      # # - run: make wait_for_broker
-      # #   if: runner.os == 'Linux'
-      # - run: make publish_pacts
-      #   if: runner.os == 'Linux'
-      #   env:
-      #     PACT_BROKER_USERNAME: pact
-      #     PACT_BROKER_PASSWORD: pact
-      #     PACT_BROKER_BASE_URL: http://localhost:8000
-      # - run: make verify_demo_gprc_publish_broker
-      #   if: runner.os == 'Linux'
-      #   env:
-      #     PACT_BROKER_USERNAME: pact
-      #     PACT_BROKER_PASSWORD: pact
-      #     PACT_BROKER_BASE_URL: http://localhost:8000
-      # - run: make verify_demo_gprc_fetch_broker
-      #   if: runner.os == 'Linux'
-      #   env:
-      #     PACT_BROKER_USERNAME: pact
-      #     PACT_BROKER_PASSWORD: pact
-      #     PACT_BROKER_BASE_URL: http://localhost:8000
-      #   # Docker is not available in osx/win
-      #   # so we will publish to pactflow
       - run: make publish_pacts
-        # if: runner.os != 'Linux'
         env:
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
           PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
       - run: make verify_demo_gprc_publish_broker
-        # if: runner.os != 'Linux'
         env:
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
           PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
       - run: make verify_demo_gprc_fetch_broker
-        # if: runner.os != 'Linux'
         env:
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
           PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
-      # - run: make stop_broker
-        # if: runner.os == 'Linux'
+

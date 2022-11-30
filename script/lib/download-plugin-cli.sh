@@ -9,7 +9,7 @@ require_binary gunzip
 require_env_var PLUGIN_CLI_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-plugins/releases/download
-PLUGIN_CLI_DIR="${LIB_DIR}/../../pact/plugin"
+PLUGIN_CLI_DIR="${HOME}/.pact/cli/plugin"
 
 if [[ $(find "${PLUGIN_CLI_DIR}" -name "${PLUGIN_CLI_VERSION}*") ]]; then
   log "Skipping download of plugin cli ${PLUGIN_CLI_VERSION}, if it exists"

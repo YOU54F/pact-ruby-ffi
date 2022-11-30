@@ -44,10 +44,10 @@ install_demo_grpc:
 	cd examples/area_calculator && bundle install
 
 test_demo_gprc_pact:
-	rspec examples/area_calculator/spec/pactffi_create_plugin_pact_spec.rb
+	export DEBUG_TARGET="$(shell ruby lib/detect_os.rb)" && cd examples/area_calculator && rspec spec/pactffi_create_plugin_pact_spec.rb
 
 show_demo_gprc_pact:
-	cat pacts/grpc-consumer-ruby-area-calculator-provider.json | jq .
+	cat examples/area_calculator/pacts/grpc-consumer-ruby-area-calculator-provider.json | jq .
 
 start_demo_gprc_provider:
 	ruby examples/area_calculator/area_calculator_provider.rb
@@ -56,7 +56,7 @@ start_demo_gprc_consumer:
 	ruby examples/area_calculator/area_calculator_consumer_run.rb
 
 verify_demo_gprc_local:
-	TEST_COMMAND='pact/verifier/pact_verifier_cli -f pacts/grpc-consumer-ruby-area-calculator-provider.json -p 37757 -l info' \
+	TEST_COMMAND='pact/verifier/pact_verifier_cli -f examples/area_calculator/pacts/grpc-consumer-ruby-area-calculator-provider.json -p 37757 -l info' \
 	make start_server_and_test
 
 start_broker:
@@ -74,10 +74,16 @@ publish_pacts:
 	*) pact/standalone/pact/bin/pact-broker publish pacts --consumer-app-version $(shell git rev-parse HEAD)${detected_OS} --branch $(shell git rev-parse --abbrev-ref HEAD);; \
 	esac
 	
+publish_grpc_pact:
+	case "${detected_OS}" in \
+	"WINDOWS"|"MINGW"|"MSYS")pact/standalone/pact/bin/pact-broker.bat publish pacts --consumer-app-version $(shell git rev-parse HEAD)"${detected_OS}" --branch $(shell git rev-parse --abbrev-ref HEAD);; \
+	*) pact/standalone/pact/bin/pact-broker publish examples/area_calculator/pacts --consumer-app-version $(shell git rev-parse HEAD)${detected_OS} --branch $(shell git rev-parse --abbrev-ref HEAD);; \
+	esac
+	
 
 verify_demo_gprc_publish_broker:
 	TEST_COMMAND="pact/verifier/pact_verifier_cli \
-	-f pacts/grpc-consumer-ruby-area-calculator-provider.json \
+	-f examples/area_calculator/pacts/grpc-consumer-ruby-area-calculator-provider.json \
 	-p 37757 \
 	-l info \
 	--publish \
@@ -89,7 +95,7 @@ verify_demo_gprc_publish_broker:
 verify_demo_gprc_fetch_broker:
 	TEST_COMMAND="pact/verifier/pact_verifier_cli \
 	-p 37757 \
-	-l debug \
+	-l info \
 	--publish \
 	--provider-name area-calculator-provider \
 	--provider-version $(shell git rev-parse HEAD)${detected_OS} \

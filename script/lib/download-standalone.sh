@@ -8,7 +8,7 @@ require_binary unzip
 require_env_var STANDALONE_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-ruby-standalone/releases/download
-STANDALONE_DIR="${LIB_DIR}/../../pact/standalone"
+STANDALONE_DIR="${HOME}/.pact/cli/standalone"
 
 function download_standalone {
   if [ -z "${1:-}" ]; then
