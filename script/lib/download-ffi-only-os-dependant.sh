@@ -9,17 +9,16 @@ require_binary gunzip
 require_env_var FFI_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
-FFI_DIR="${HOME_DIR}/.pact/ffi/v0.3.15"
+FFI_DIR="${HOME}/.pact/ffi/v0.3.15"
 
-if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
-  log "Skipping download of FFI libraries ${FFI_VERSION}, as they exist"
-  exit 0
-fi
+# if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
+#   log "Skipping download of FFI libraries ${FFI_VERSION}, as they exist"
+#   exit 0
+# fi
 
 warn "Cleaning ffi directory $FFI_DIR"
 rm -rf "${FFI_DIR:?}"
-mkdir -p "$FFI_DIR/osxaarch64"
-mkdir -p "$FFI_DIR/linuxaarch64"
+mkdir -p "$FFI_DIR"
 
 function download_ffi_file {
   if [ -z "${1:-}" ]; then
@@ -60,7 +59,7 @@ echo detected_os = $detected_os
 case ${detected_os} in
 'Darwin arm64')
     echo "downloading of osx aarch64 FFI libs"
-    download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "osxaarch64/libpact_ffi.dylib.gz"
+    download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "libpact_ffi.dylib.gz"
     os='osx-aarch64'
     ;;
 'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
@@ -70,7 +69,7 @@ case ${detected_os} in
     ;;
 "Linux aarch64"* | "Linux arm64"*)
     echo "downloading of linux aarch64 FFI libs"
-    download_ffi "linux-aarch64.so.gz" "lib" "linuxaarch64/libpact_ffi.so.gz"
+    download_ffi "linux-aarch64.so.gz" "lib" "libpact_ffi.so.gz"
     os='linux-aarch64'
     ;;
 'Linux x86_64' | "Linux"*)
