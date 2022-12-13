@@ -45,15 +45,15 @@ module DetectOS
     if debug?
       ENV['DEBUG_TARGET'].to_s
     elsif windows?
-      File.expand_path('./pact/ffi/windows/pact_ffi.dll')
+      File.expand_path('~/.pact/ffi/v0.3.15/pact_ffi.dll')
     elsif mac_arm?
-      File.expand_path('./pact/ffi/osxaarch64/libpact_ffi.dylib')
+      File.expand_path('~/.pact/ffi/v0.3.15/libpact_ffi.dylib')
     elsif mac?
-      File.expand_path('./pact/ffi/osxx8664/libpact_ffi.dylib')
+      File.expand_path('~/.pact/ffi/v0.3.15/libpact_ffi.dylib')
     elsif linux_arm?
-      File.expand_path('./pact/ffi/linuxaarch64/libpact_ffi.so')
+      File.expand_path('~/.pact/ffi/v0.3.15/libpact_ffi.so')
     elsif linux?
-      File.expand_path('./pact/ffi/linuxx8664/libpact_ffi.so')
+      File.expand_path('~/.pact/ffi/v0.3.15/libpact_ffi.so')
     else
       raise "Detected #{RbConfig::CONFIG['arch']}-- I have no idea what to do with that."
     end
