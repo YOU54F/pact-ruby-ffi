@@ -5,7 +5,7 @@ RUN bundle config --global frozen 1
 
 RUN gem update bundler
 COPY . ./
-# COPY Gemfile Gemfile.lock pact_ruby_ffi.gemspec ./
+# COPY Gemfile Gemfile.lock pact-ffi.gemspec ./
 RUN bundle install
 
 

@@ -5,4 +5,4 @@ source 'https://rubygems.org/'
 
 gemspec
 
-gem 'pact_ruby_ffi', :path => '../../'
+gem 'pact-ffi', :path => '../../'

@@ -11,3 +11,5 @@ pact/
 pacts/
 logs/**
 getpact.docker-compose.yml
+!lib/pact
+ffi/

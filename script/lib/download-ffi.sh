@@ -9,12 +9,12 @@ require_binary gunzip
 require_env_var FFI_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
-FFI_DIR="${HOME}/.pact/ffi/v0.3.15"
-mkdir -p "$FFI_DIR/osxaarch64"
-mkdir -p "$FFI_DIR/linuxaarch64"
-mkdir -p "$FFI_DIR/osxx8664"
-mkdir -p "$FFI_DIR/linuxx8664"
-mkdir -p "$FFI_DIR/windows"
+FFI_DIR="ffi"
+mkdir -p "$FFI_DIR/macos-arm64"
+mkdir -p "$FFI_DIR/linux-arm64"
+mkdir -p "$FFI_DIR/macos-x64"
+mkdir -p "$FFI_DIR/linux-x64"
+mkdir -p "$FFI_DIR/windows-x64"
 
 if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
   log "Skipping download of FFI libraries ${FFI_VERSION}, as they exist"
@@ -23,8 +23,8 @@ fi
 
 warn "Cleaning ffi directory $FFI_DIR"
 rm -rf "${FFI_DIR:?}/*"
-mkdir -p "$FFI_DIR/osxaarch64"
-mkdir -p "$FFI_DIR/linuxaarch64"
+mkdir -p "$FFI_DIR/macos-arm64"
+mkdir -p "$FFI_DIR/linux-arm64"
 
 function download_ffi_file {
   if [ -z "${1:-}" ]; then
@@ -61,16 +61,15 @@ function download_ffi {
 }
 
 if [ -z "${ONLY_DOWNLOAD_PACT_FOR_WINDOWS:-}" ]; then
-  download_ffi "linux-x86_64.so.gz" "lib" "linuxx8664/libpact_ffi.so.gz"
-  download_ffi "linux-aarch64.so.gz" "lib" "linuxaarch64/libpact_ffi.so.gz"
-  download_ffi "osx-x86_64.dylib.gz" "lib" "osxx8664/libpact_ffi.dylib.gz"
-  download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "osxaarch64/libpact_ffi.dylib.gz"
+  download_ffi "linux-x86_64.so.gz" "lib" "linux-x64/libpact_ffi.so.gz"
+  download_ffi "linux-aarch64.so.gz" "lib" "linux-arm64/libpact_ffi.so.gz"
+  download_ffi "osx-x86_64.dylib.gz" "lib" "macos-x64/libpact_ffi.dylib.gz"
+  download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "macos-arm64/libpact_ffi.dylib.gz"
 else
   warn "Skipped download of non-windows FFI libs because ONLY_DOWNLOAD_PACT_FOR_WINDOWS is set"
 fi
 
-download_ffi "windows-x86_64.dll.gz" "" "windows/pact_ffi.dll.gz"
-download_ffi "windows-x86_64.dll.lib.gz" "" "windows/pact_ffi.dll.lib.gz"
+download_ffi "windows-x86_64.dll.gz" "" "windows-x64/pact_ffi.dll.gz"
 
 download_ffi_file "pact.h" "pact.h"
 download_ffi_file "pact-cpp.h" "pact-cpp.h"

@@ -22,3 +22,28 @@ https://grpc.io/docs/languages/ruby/quickstart/#grpc-tools
 7. terminal 2 `ruby greeter_client.rb`
 8. `grpc_tools_ruby_protoc -I ../protos --ruby_out=lib --grpc_out=lib ../protos/helloworld.proto`
 9. `grpc_tools_ruby_protoc -I ./proto --ruby_out=area_calc_server --grpc_out=area_calc_server ./proto/area_calculator.proto`
+
+## Publishing platform specific gems
+
+https://rubygems.org/gems/nokogiri/versions
+Nokigiri support the following
+
+1.14.3 - April 11, 2023 java (9.56 MB)
+1.14.3 - April 11, 2023 x86_64-linux (3.94 MB)
+1.14.3 - April 11, 2023 (4.43 MB)
+1.14.3 - April 11, 2023 x86-linux (4.13 MB)
+1.14.3 - April 11, 2023 x86-mingw32 (5.88 MB)
+1.14.3 - April 11, 2023 x86_64-darwin (6.53 MB)
+1.14.3 - April 11, 2023 aarch64-linux (3.84 MB)
+1.14.3 - April 11, 2023 arm64-darwin (6.35 MB)
+1.14.3 - April 11, 2023 x64-mingw32 (3.19 MB)
+1.14.3 - April 11, 2023 x64-mingw-ucrt (3.19 MB)
+1.14.3 - April 11, 2023 arm-linux (3.3 MB)
+
+
+### Gems we can build
+
+x86_64-linux
+x86_64-darwin
+aarch64-linux
+arm64-darwin

@@ -9,7 +9,7 @@ require_binary gunzip
 require_env_var FFI_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
-FFI_DIR="${HOME}/.pact/ffi/v0.3.15"
+FFI_DIR="ffi"
 
 # if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
 #   log "Skipping download of FFI libraries ${FFI_VERSION}, as they exist"

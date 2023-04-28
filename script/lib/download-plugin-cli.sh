@@ -49,7 +49,7 @@ function download_plugin_cli {
   PREFIX="${2:-}"
   OUTPUT_FILENAME="${3:-}"
   OS="${4:-}"
-  log "${PREFIX}pact_ffi-$SUFFIX" "${OUTPUT_FILENAME}"
+  log "${PREFIX}pact-ffi-$SUFFIX" "${OUTPUT_FILENAME}"
 
   download_plugin_cli_file "${PREFIX}pact-plugin-cli-$SUFFIX" "${OUTPUT_FILENAME}"
   log " ... unzipping '$DOWNLOAD_LOCATION'"

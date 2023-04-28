@@ -15,6 +15,9 @@ install:
 download_libs: 
 	./script/download-libs.sh
 
+download_all_libs: 
+	./script/download-all-libs.sh
+
 test: 
 	rake spec
 

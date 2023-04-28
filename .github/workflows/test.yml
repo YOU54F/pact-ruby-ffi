@@ -10,6 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        ruby-version: ['2.6','2.7', '3.0', '3.1','3.2']
       fail-fast: false
     runs-on: ${{ matrix.os }}
     defaults:
@@ -19,10 +20,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.0.4"
+          ruby-version: ${{ matrix.ruby-version }}
       - run: gem update bundler
       - run: make install
-      - run: make download_libs
+      - run: make download_all_libs
       # - run: make test
       - run: make test_message_pact
       - run: make show_message_pact
