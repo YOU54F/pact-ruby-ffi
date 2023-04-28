@@ -70,6 +70,30 @@ else
 fi
 
 download_ffi "windows-x86_64.dll.gz" "" "windows-x64/pact_ffi.dll.gz"
+download_ffi "windows-x86_64.dll.lib.gz" "" "windows-x64/pact_ffi.dll.lib.gz"
+
+# malloc error if no dll.lib provided, believe this is because its an msvc release rather than a gnu
+# rspec spec/pactffi_create_message_pact_spec.rb
+# detected windows
+# D:/a/pact-ruby-ffi/pact-ruby-ffi/ffi/windows-x64/pact_ffi.dll
+# detected windows
+
+# An error occurred while loading ./spec/pactffi_create_message_pact_spec.rb. - Did you mean?
+#                     rspec ./spec/pactffi_create_mock_server_spec.rb
+
+# Failure/Error: attach_function :malloc, %i[size_t], :pointer
+
+# FFI::NotFoundError:
+#   Function 'malloc' not found in [D:/a/pact-ruby-ffi/pact-ruby-ffi/ffi/windows-x64/pact_ffi.dll]
+# # ./lib/pact/ffi.rb:102:in `<module:PactFfi>'
+# # ./lib/pact/ffi.rb:5:in `<top (required)>'
+# # ./spec/pactffi_create_message_pact_spec.rb:2:in `<top (required)>'
+# No examples found.
+
+
+# Finished in 0.00004 seconds (files took 1.54 seconds to load)
+# 0 examples, 0 failures, 1 error occurred outside of examples
+
 
 download_ffi_file "pact.h" "pact.h"
 download_ffi_file "pact-cpp.h" "pact-cpp.h"

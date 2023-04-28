@@ -25,7 +25,9 @@ linux_amd64_task:
     image: $IMAGE
     architecture: amd64
   install_script: 
+      - apt update --yes && apt install --yes jq
       - ruby --version
+      - gem install bundler:2.4.10
       - bundler --version
   << : *BUILD_TEST_TASK_TEMPLATE
 
