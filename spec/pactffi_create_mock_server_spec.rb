@@ -11,7 +11,7 @@ RSpec.describe 'pactffi_create_mock_server spec' do
           "name": "Alice Service"
         },
         "consumer": {
-          "name": "Consumer"
+          "name": "Consumer-pact-ruby-ffi"
         },
         "interactions": [
           {

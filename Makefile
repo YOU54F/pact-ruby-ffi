@@ -38,7 +38,7 @@ test_pactffi_create_mock_server:
 	rspec spec/pactffi_create_mock_server_spec.rb
 
 show_pactffi_create_mock_server:
-	cat "pacts/Consumer-Alice Service.json" | jq .
+	cat "pacts/Consumer-pact-ruby-ffi-Alice Service.json" | jq .
 
 install_protobuf_plugin:
 	pact/plugin/pact-plugin-cli -y install https://github.com/pactflow/pact-protobuf-plugin/releases/latest

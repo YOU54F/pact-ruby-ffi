@@ -1,0 +1,82 @@
+BUILD_TEST_TASK_TEMPLATE: &BUILD_TEST_TASK_TEMPLATE
+  cirrus_cli_pre_req_script:
+    - chmod +x script/**/*
+  arch_check_script:
+    - uname -am
+  test_script:
+      - gem update bundler
+      - make install
+      - make download_all_libs
+      - make test_message_pact
+      - make show_message_pact
+      - make test_pactffi_create_mock_server_for_pact
+      - make show_pactffi_create_mock_server_for_pact
+      - make test_pactffi_create_mock_server
+
+linux_amd64_task:  
+  env:
+    matrix:
+      - IMAGE: ruby:3.2
+      - IMAGE: ruby:3.1
+      - IMAGE: ruby:3.0
+      - IMAGE: ruby:2.7
+      - IMAGE: ruby:2.6
+  container:
+    image: $IMAGE
+    architecture: amd64
+  install_script: 
+      - ruby --version
+      - bundler --version
+  << : *BUILD_TEST_TASK_TEMPLATE
+
+
+macosx_ruby_3_2_2_task: 
+  macos_instance:
+    image: ghcr.io/cirruslabs/macos-ventura-base:latest
+  pre_req_script: 
+    - brew install ruby
+    - ruby --version
+    - bundler --version
+  << : *BUILD_TEST_TASK_TEMPLATE
+
+macosx_system_ruby_task: 
+  macos_instance:
+    image: ghcr.io/cirruslabs/macos-ventura-base:latest
+  pre_req_script: 
+    - ruby --version
+    - bundler --version
+  << : *BUILD_TEST_TASK_TEMPLATE
+
+
+# linux_arm64_task: 
+#   env:
+#     matrix:
+#       - IMAGE: ruby:3.2
+#       - IMAGE: ruby:3.1
+#       - IMAGE: ruby:3.0
+#       - IMAGE: ruby:2.9
+#       - IMAGE: ruby:2.8
+#       - IMAGE: ruby:2.7
+#       - IMAGE: ruby:2.6
+#     PATH: "$HOME/.rbenv/bin:/root/.rbenv/shims:$PATH"
+#   # container:
+#   #   image: ruby:3.2.2
+#   #   architecture: arm64
+#   # pre_req_script: |
+#   #     apt update --yes && apt install --yes git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev zip
+#   #     ruby --version
+#   #     bundler --version
+#   # arm_container:
+#   #   image: ubuntu:latest
+#   #   architecture: arm64  
+#   # install_ruby_from_source_script: |
+#   #     apt update --yes && apt install --yes git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev zip
+#   #     curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+#   #     echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+#   #     source ~/.bashrc
+#   #     rbenv install 3.2.2
+#   #     rbenv global 3.2.2
+#   #     ruby --version
+#   #     bundler --version
+#   << : *BUILD_TEST_TASK_TEMPLATE
+

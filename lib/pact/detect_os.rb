@@ -45,7 +45,7 @@ module DetectOS
     if debug?
       ENV['DEBUG_TARGET'].to_s
     elsif windows?
-      File.expand_path('ffi/windows-x64/pact-ffi.dll')
+      File.expand_path('ffi/windows-x64/pact_ffi.dll')
     elsif mac_arm?
       File.expand_path('ffi/macos-arm64/libpact_ffi.dylib')
     elsif mac?

@@ -1,10 +1,9 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'pact/ffi/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'pact-ffi'
-  spec.version       = PactFfi::VERSION
+  spec.version       = "0.1.0"
   spec.authors       = ['Yousaf Nabi']
   spec.email         = ['you@saf.dev']
   spec.summary       = 'Pact Reference FFI libpact_ffi library wrapper'
@@ -13,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
   spec.files         = `git ls-files ffi bin lib pact.gemspec CHANGELOG.md LICENSE.txt README.md`.split($/)
   spec.require_paths = ['lib']
-  spec.add_development_dependency 'bundler', '~> 2.3'
+  spec.add_development_dependency 'bundler', '~> 2.4'
   spec.add_development_dependency 'httparty', '~> 0.17.3'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
