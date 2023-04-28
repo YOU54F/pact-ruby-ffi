@@ -99,14 +99,18 @@ module PactFfi
     'LOG_LEVEL_TRACE' => 'TRACE'
   ]
 
-  attach_function :malloc, %i[size_t], :pointer
-  attach_function :calloc, %i[size_t size_t], :pointer
-  attach_function :realloc, %i[pointer size_t], :pointer
-  attach_function :free, %i[pointer], :void
-  attach_function :posix_memalign, %i[pointer size_t size_t], :int32
-  attach_function :abort, %i[], :void
-  attach_function :getenv, %i[string], :string
-  attach_function :realpath, %i[string string], :string
+  # These bork on windows not sure they they are added in
+  # as part of deno-bindgen, maybe the include headers
+  # attach_function :malloc, %i[size_t], :pointer
+  # attach_function :calloc, %i[size_t size_t], :pointer
+  # attach_function :realloc, %i[pointer size_t], :pointer
+  # attach_function :free, %i[pointer], :void
+  # attach_function :posix_memalign, %i[pointer size_t size_t], :int32
+  # attach_function :abort, %i[], :void
+  # attach_function :getenv, %i[string], :string
+  # attach_function :realpath, %i[string string], :string
+
+
   attach_function :pactffi_version, %i[], :string
   attach_function :pactffi_init, %i[string], :void
   attach_function :pactffi_init_with_log_level, %i[string], :void
