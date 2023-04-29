@@ -33,7 +33,12 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  x86-linux
+  x86_64-darwin
   arm64-darwin-22
+  arm64-darwin-21
+  x64-mingw-ucrt
+  x64-mingw32
 
 DEPENDENCIES
   bundler (~> 2.4)
