@@ -5,11 +5,9 @@ To generate the Go code for the proto file, you need to install the Protobuf com
 1. Create your proto file
 2. `pact-plugin-cli -y install https://github.com/pactflow/pact-protobuf-plugin/releases/latest`
 3. `protoc --go_out=. --go-grpc_out=. --proto_path ../proto ../proto/area_calculator.proto`
-4.  `protoc --ruby_out=../lib --grpc_out=../lib ../proto/area_calculator.proto`
-5.  `protoc --ruby_out=./lib --grpc_out=./lib ../proto/area_calculator.proto`
-6.  grpc_tools_ruby_protoc -I ../../protos --ruby_out=../lib --grpc_out=../lib ../../protos/route_guide.proto
-
-
+4. `protoc --ruby_out=../lib --grpc_out=../lib ../proto/area_calculator.proto`
+5. `protoc --ruby_out=./lib --grpc_out=./lib ../proto/area_calculator.proto`
+6. grpc_tools_ruby_protoc -I ../../protos --ruby_out=../lib --grpc_out=../lib ../../protos/route_guide.proto
 
 https://grpc.io/docs/languages/ruby/quickstart/#grpc-tools
 
@@ -40,10 +38,13 @@ Nokigiri support the following
 1.14.3 - April 11, 2023 x64-mingw-ucrt (3.19 MB)
 1.14.3 - April 11, 2023 arm-linux (3.3 MB)
 
-
 ### Gems we can build
 
 x86_64-linux
 x86_64-darwin
 aarch64-linux
 arm64-darwin
+
+good reads
+
+https://www.varvet.com/blog/advanced-topics-in-ruby-ffi/

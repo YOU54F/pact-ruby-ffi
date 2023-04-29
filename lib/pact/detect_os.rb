@@ -15,7 +15,7 @@ module DetectOS
   end
 
   def self.mac?
-    if !(/darwin/ =~ RbConfig::CONFIG['arch']).nil? && !(/x64/ =~ RbConfig::CONFIG['arch']).nil?
+    if !(/darwin/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?
       puts 'detected macos'
       true
     end
@@ -29,7 +29,7 @@ module DetectOS
   end
 
   def self.linux?
-    if !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/x64/ =~ RbConfig::CONFIG['arch']).nil?
+    if !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?
       puts 'detected linux'
       true
     end

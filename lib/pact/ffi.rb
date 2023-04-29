@@ -6,6 +6,10 @@ module PactFfi
   extend FFI::Library
   ffi_lib DetectOS.get_bin_path
 
+  # at least neccessary on x64-mingw-ucrt as uint32_type is undefined
+  # also neccessary on linux aarch64 is it seems
+  DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+
   FfiSpecificationVersion = Hash[
     'SPECIFICATION_VERSION_UNKNOWN' => 0,
     'SPECIFICATION_VERSION_V1' => 1,
@@ -109,9 +113,6 @@ module PactFfi
   # attach_function :abort, %i[], :void
   # attach_function :getenv, %i[string], :string
   # attach_function :realpath, %i[string string], :string
-
-  # at least neccessary on x64-mingw-ucrt as uint32_type is undefined
-  DetectOS.windows? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
 
   attach_function :pactffi_version, %i[], :string
   attach_function :pactffi_init, %i[string], :void
@@ -352,7 +353,8 @@ module PactFfi
   attach_function :pactffi_verifier_add_directory_source, %i[pointer string], :void
   attach_function :pactffi_verifier_url_source, %i[pointer string string string string], :void
   attach_function :pactffi_verifier_broker_source, %i[pointer string string string string], :void
-  attach_function :pactffi_verifier_broker_source_with_selectors, %i[pointer string string string string uint8 string pointer uint16 string pointer uint16 pointer uint16], :void
+  attach_function :pactffi_verifier_broker_source_with_selectors,
+                  %i[pointer string string string string uint8 string pointer uint16 string pointer uint16 pointer uint16], :void
   attach_function :pactffi_verifier_execute, %i[pointer], :int32
   attach_function :pactffi_verifier_cli_args, %i[], :string
   attach_function :pactffi_verifier_logs, %i[pointer], :string
