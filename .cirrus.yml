@@ -31,6 +31,24 @@ linux_amd64_task:
       - bundler --version
   << : *BUILD_TEST_TASK_TEMPLATE
 
+linux_arm64_task:  
+  env:
+    matrix:
+      - IMAGE: ruby:3.2
+      - IMAGE: ruby:3.1
+      - IMAGE: ruby:3.0
+      - IMAGE: ruby:2.7
+      - IMAGE: ruby:2.6
+  arm_container:
+    image: $IMAGE
+    architecture: arm64
+  install_script: 
+      - apt update --yes && apt install --yes jq
+      - ruby --version
+      - gem install bundler:2.4.10
+      - bundler --version
+  << : *BUILD_TEST_TASK_TEMPLATE
+
 
 macosx_ruby_3_2_2_task: 
   macos_instance:
@@ -39,6 +57,7 @@ macosx_ruby_3_2_2_task:
     - brew install ruby
     - ruby --version
     - bundler --version
+    - gem install rspec
   << : *BUILD_TEST_TASK_TEMPLATE
 
 macosx_system_ruby_task: 
