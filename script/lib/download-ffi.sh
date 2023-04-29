@@ -16,15 +16,18 @@ mkdir -p "$FFI_DIR/macos-x64"
 mkdir -p "$FFI_DIR/linux-x64"
 mkdir -p "$FFI_DIR/windows-x64"
 
-if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
-  log "Skipping download of FFI libraries ${FFI_VERSION}, as they exist"
-  exit 0
-fi
+# if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
+#   log "Skipping download of FFI libraries ${FFI_VERSION}, as they exist"
+#   exit 0
+# fi
 
 warn "Cleaning ffi directory $FFI_DIR"
-rm -rf "${FFI_DIR:?}/*"
+rm -rf "${FFI_DIR:?}"
 mkdir -p "$FFI_DIR/macos-arm64"
 mkdir -p "$FFI_DIR/linux-arm64"
+mkdir -p "$FFI_DIR/macos-x64"
+mkdir -p "$FFI_DIR/linux-x64"
+mkdir -p "$FFI_DIR/windows-x64"
 
 function download_ffi_file {
   if [ -z "${1:-}" ]; then

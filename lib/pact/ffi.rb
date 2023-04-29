@@ -7,7 +7,7 @@ module PactFfi
   ffi_lib DetectOS.get_bin_path
 
   # at least neccessary on x64-mingw-ucrt as uint32_type is undefined
-  # also neccessary on linux aarch64 is it seems
+  # also neccessary on linux aarch64 it seems
   DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
 
   FfiSpecificationVersion = Hash[
