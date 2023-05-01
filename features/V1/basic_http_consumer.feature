@@ -17,4 +17,3 @@ Feature: Basic HTTP consumer
     And the pact file will contain {one} interaction
     And the interaction request will be for a {GET}
     And the interaction response will contain the {basic} document
-    
