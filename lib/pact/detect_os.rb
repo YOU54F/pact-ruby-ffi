@@ -1,64 +1,64 @@
 module DetectOS
-
   def self.windows?
-    if !(/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RbConfig::CONFIG['arch']).nil?
-      puts 'detected windows'
-      true
-    end
+    return if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RbConfig::CONFIG['arch']).nil?
+
+    puts 'detected windows'
+    true
   end
 
   def self.mac_arm?
-    if !(/darwin/ =~ RbConfig::CONFIG['arch']).nil? && !(/arm64/ =~ RbConfig::CONFIG['arch']).nil?
-      puts 'detected macos arm'
-      true
-    end
+    return unless !(/darwin/ =~ RbConfig::CONFIG['arch']).nil? && !(/arm64/ =~ RbConfig::CONFIG['arch']).nil?
+
+    puts 'detected macos arm'
+    true
   end
 
   def self.mac?
-    if !(/darwin/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?
-      puts 'detected macos'
-      true
-    end
+    return unless !(/darwin/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?
+
+    puts 'detected macos'
+    true
   end
 
   def self.linux_arm?
-    if !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/aarch64/ =~ RbConfig::CONFIG['arch']).nil?
-      puts 'detected linux aarch64'
-      true
-    end
+    return unless !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/aarch64/ =~ RbConfig::CONFIG['arch']).nil?
+
+    puts 'detected linux aarch64'
+    true
   end
 
   def self.linux?
-    if !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?
-      puts 'detected linux'
-      true
-    end
+    return unless !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?
+
+    puts 'detected linux'
+    true
   end
 
   def self.debug?
-    if ENV['DEBUG_TARGET'] != nil
-      puts 'detected debug target' + ENV['DEBUG_TARGET']
-      true
-    end
+    return if ENV['DEBUG_TARGET'].nil?
+
+    puts 'detected debug target' + ENV['DEBUG_TARGET']
+    true
   end
 
   def self.get_bin_path
     if debug?
       ENV['DEBUG_TARGET'].to_s
     elsif windows?
-      File.expand_path('ffi/windows-x64/pact_ffi.dll')
+      File.join(__dir__, '../../ffi/windows-x64/pact_ffi.dll')
     elsif mac_arm?
-      File.expand_path('ffi/macos-arm64/libpact_ffi.dylib')
+      File.join(__dir__, '../../ffi/macos-arm64/libpact_ffi.dylib')
     elsif mac?
-      File.expand_path('ffi/macos-x64/libpact_ffi.dylib')
+      File.join(__dir__, '../../ffi/macos-x64/libpact_ffi.dylib')
     elsif linux_arm?
-      File.expand_path('ffi/linux-arm64/libpact_ffi.so')
+      File.join(__dir__, '../../ffi/linux-arm64/libpact_ffi.so')
     elsif linux?
-      File.expand_path('ffi/linux-x64/libpact_ffi.so')
+      File.join(__dir__, '../../ffi/linux-x64/libpact_ffi.so')
     else
       raise "Detected #{RbConfig::CONFIG['arch']}-- I have no idea what to do with that."
     end
   end
+
   def self.get_os
     if windows?
       'win'
