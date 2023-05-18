@@ -134,7 +134,7 @@ Feature: Basic HTTP consumer
   Scenario: Request with the incorrect type of body contents
     When the mock server is started with interaction {4}
     And request {4} is made to the mock server with the following changes:
-      | body                           |
+      | body                                                                         |
       | XML: <?xml version="1.0" encoding="UTF-8"?><alligator name="Mary" feet="4"/> |
     Then a 500 error response is returned
     When the pact test is done

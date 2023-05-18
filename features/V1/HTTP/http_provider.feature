@@ -52,4 +52,4 @@ Feature: Basic HTTP provider
     When the verification is run
     Then the verification will NOT be successful
     And a failed verification result will be published back for the interaction {1}
-    And the idiot who created the provider will have a stern talking to
+    And the idiot who created the provider will have the failed verification results shoved in their face
