@@ -140,5 +140,5 @@ Feature: Basic HTTP consumer
     When the pact test is done
     Then the mock server status will NOT be OK
     And the mock server status will be mismatches
-    And the mismatches will contain a "body-content-type" mismatch with error "Expected a response type of 'application/json' but the actual type was 'application/xml'"
+    And the mismatches will contain a "body-content-type" mismatch with error "Expected a body of 'application/json' but the actual content type was 'application/xml'"
     And the mock server will NOT write out a Pact file for the interaction when done
