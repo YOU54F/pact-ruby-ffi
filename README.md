@@ -9,9 +9,11 @@ The project then needs the steps to be implemented to get the features to pass.
 
 Recommened project layout:
 
+```
 compatibility-suite
     pact-compatibility-suite (subtree from this repo)
     steps (code for the steps, can be named anything)
+```
 
 For examples of how this has been implemented, see https://github.com/pact-foundation/pact-reference/tree/master/compatibility-suite and https://github.com/pact-foundation/pact-jvm/tree/master/compatibility-suite.
 
