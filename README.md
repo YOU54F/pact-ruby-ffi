@@ -1,13 +1,13 @@
 # pact-compatibility-suite
 Set of BDD style tests to check compatibility between Pact implementations.
 
-This respository contains the BDD features for verifying a Pact implementation. It requires the [Cucumber BDD](https://cucumber.io/) test tool to execute.
+This repository contains the BDD features for verifying a Pact implementation. It requires the [Cucumber BDD](https://cucumber.io/) test tool to execute.
 
 ## Adding it to a project
 The easyest way to add the suite to a project to to create a compatibility-suite subdirectory and then use the Git subtree command to pull the features and fixtures.
 The project then needs the steps to be implemented to get the features to pass.
 
-Recommened project layout:
+Recommend project layout:
 
 ```
 compatibility-suite
