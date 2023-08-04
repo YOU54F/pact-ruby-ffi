@@ -14,3 +14,4 @@ getpact.docker-compose.yml
 !lib/pact
 !lib/pact/ffi/version.rb
 ffi/
+.DS_Store
