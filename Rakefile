@@ -89,9 +89,9 @@ task :yank do
 end
 
 task :push do
-  # sh 'cd pkg && gem push pact-ffi-0.0.2-aarch64-linux.gem'
-  # sh 'cd pkg && gem push pact-ffi-0.0.2-arm64-darwin.gem'
-  # sh 'cd pkg && gem push pact-ffi-0.0.2-x64-mingw-ucrt.gem'
-  # sh 'cd pkg && gem push pact-ffi-0.0.2-x86_64-darwin.gem'
-  # sh 'cd pkg && gem push pact-ffi-0.0.2-x86_64-linux.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.3-aarch64-linux.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.3-arm64-darwin.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.3-x64-mingw-ucrt.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.3-x86_64-darwin.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.3-x86_64-linux.gem'
 end
