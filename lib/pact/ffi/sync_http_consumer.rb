@@ -7,7 +7,8 @@ module PactFfi
     extend FFI::Library
     ffi_lib DetectOS.get_bin_path
 
-    DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+    # DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+    (typedef :uint32, :uint32_type) 
 
     attach_function :new, :pactffi_sync_http_new, %i[], :pointer
     attach_function :delete, :pactffi_sync_http_delete, %i[pointer], :void

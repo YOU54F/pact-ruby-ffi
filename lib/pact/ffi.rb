@@ -8,8 +8,8 @@ module PactFfi
 
   # at least neccessary on x64-mingw-ucrt as uint32_type is undefined
   # also neccessary on linux aarch64 it seems
-  DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
-
+  # DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)        (typedef :uint32, :uint32_type) 
+  (typedef :uint32, :uint32_type)
   FfiSpecificationVersion = Hash[
     'SPECIFICATION_VERSION_UNKNOWN' => 0,
     'SPECIFICATION_VERSION_V1' => 1,
@@ -306,7 +306,7 @@ module PactFfi
   attach_function :upon_receiving, :pactffi_upon_receiving, %i[uint32_type string], :bool
   attach_function :given, :pactffi_given, %i[uint32_type string], :bool
   attach_function :given, :pactffi_given, %i[uint32_type string], :bool
-  attach_function :given_with_params, :pactffi_given_with_params, %i[uint32_t string string], :int32
+  attach_function :given_with_params, :pactffi_given_with_params, %i[uint32_type string string], :int32
   attach_function :interaction_test_name, :pactffi_interaction_test_name, %i[uint32_type string], :uint32_type
   attach_function :given_with_param, :pactffi_given_with_param, %i[uint32_type string string string], :bool
   attach_function :with_request, :pactffi_with_request, %i[uint32_type string string], :bool

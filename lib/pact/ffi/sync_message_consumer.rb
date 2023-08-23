@@ -7,7 +7,8 @@ module PactFfi
     extend FFI::Library
     ffi_lib DetectOS.get_bin_path
 
-    DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+    # DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+    (typedef :uint32, :uint32_type) 
 
     attach_function :pact_interaction_as_synchronous_message, :pactffi_pact_interaction_as_synchronous_message, %i[pointer], :pointer
     attach_function :iter_next, :pactffi_pact_sync_message_iter_next, %i[pointer], :pointer

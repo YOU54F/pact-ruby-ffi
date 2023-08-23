@@ -12,7 +12,7 @@ RSpec.describe 'pactffi_new_plugin spec' do
   describe 'with grpcInteraction - calculateMulti' do
     let(:contents) do
       {
-        "pact:proto": File.expand_path('./examples/area_calculator/proto/area_calculator.proto'),
+        "pact:proto": File.expand_path('./proto/area_calculator.proto'),
         "pact:proto-service": 'Calculator/calculateMulti',
         "pact:content-type": 'application/protobuf',
         "request": {
@@ -80,7 +80,7 @@ RSpec.describe 'pactffi_new_plugin spec' do
   describe 'with grpcInteraction - calculateOne' do
     let(:contents) do
       {
-        "pact:proto": File.expand_path('./examples/area_calculator/proto/area_calculator.proto'),
+        "pact:proto": File.expand_path('./proto/area_calculator.proto'),
         "pact:proto-service": 'Calculator/calculateOne',
         "pact:content-type": 'application/protobuf',
         "request": {

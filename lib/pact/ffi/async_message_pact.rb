@@ -7,7 +7,8 @@ module PactFfi
     extend FFI::Library
     ffi_lib DetectOS.get_bin_path
 
-    DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+    # DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+    (typedef :uint32, :uint32_type)
 
     attach_function :new, :pactffi_async_message_new, %i[], :pointer
     attach_function :delete, :pactffi_async_message_delete, %i[pointer], :void
@@ -22,6 +23,7 @@ module PactFfi
     attach_function :get_provider_state, :pactffi_async_message_get_provider_state, %i[pointer uint32_type], :pointer
     attach_function :get_provider_state_iter, :pactffi_async_message_get_provider_state_iter, %i[pointer], :pointer
     attach_function :new, :pactffi_new_async_message, %i[uint16 string], :uint32_type
-    attach_function :pact_interaction_as_asynchronous_message, :pactffi_pact_interaction_as_asynchronous_message, %i[pointer], :pointer
+    attach_function :pact_interaction_as_asynchronous_message, :pactffi_pact_interaction_as_asynchronous_message,
+                    %i[pointer], :pointer
   end
 end

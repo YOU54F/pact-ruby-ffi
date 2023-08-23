@@ -4,14 +4,19 @@ BUILD_TEST_TASK_TEMPLATE: &BUILD_TEST_TASK_TEMPLATE
   arch_check_script:
     - uname -am
   test_script:
-      - gem update bundler
+      - find . -name "*.sh" | xargs chmod +x
       - make install
       - make download_all_libs
-      - make test_message_pact
-      - make show_message_pact
-      - make test_pactffi_create_mock_server_for_pact
-      - make show_pactffi_create_mock_server_for_pact
-      - make test_pactffi_create_mock_server
+      - make test
+      - make grpc
+
+PROTOC: &PROTOC
+  protoc_script: |
+    PROTOC_ZIP=protoc-3.14.0-linux-x86_64.zip
+    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/$PROTOC_ZIP
+    unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
+    unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
+    rm -f $PROTOC_ZIP
 
 linux_amd64_task:  
   env:
@@ -25,11 +30,11 @@ linux_amd64_task:
     image: $IMAGE
     architecture: amd64
   install_script: 
-      - apt update --yes && apt install --yes jq
+      - apt update --yes && apt install --yes jq protobuf-compiler
       - ruby --version
-      - gem install bundler:2.4.10
       - bundler --version
   << : *BUILD_TEST_TASK_TEMPLATE
+  # << : *PROTOC
 
 linux_arm64_task:  
   env:
@@ -43,28 +48,27 @@ linux_arm64_task:
     image: $IMAGE
     architecture: arm64
   install_script: 
-      - apt update --yes && apt install --yes jq
+      - apt update --yes && apt install --yes jq protobuf-compiler
       - ruby --version
-      - gem install bundler:2.4.10
       - bundler --version
-  << : *BUILD_TEST_TASK_TEMPLATE
+  <<: *BUILD_TEST_TASK_TEMPLATE
+  # <<: *PROTOC
 
-
-macosx_ruby_3_2_2_task: 
+macos_arm64_task:
   macos_instance:
     image: ghcr.io/cirruslabs/macos-ventura-base:latest
-  pre_req_script: 
-    - brew install ruby
+  env:
+    PATH: ${HOME}/.pyenv/shims:${PATH}
+    matrix:
+      - IMAGE: 3.2.2 # preinstalled on macos-ventura-base
+      # - IMAGE: 3.1.4
+      # - IMAGE: 3.0.6
+      - IMAGE: 2.7.8 # preinstalled on macos-ventura-base
+      # - IMAGE: 2.6.10
+  install_script:
+    - brew install protobuf
+    - rm /Users/admin/.rbenv/version
+    - rbenv install ${IMAGE} || true
+    - rbenv global ${IMAGE}
     - ruby --version
-    - bundler --version
-    - gem install rspec
-  << : *BUILD_TEST_TASK_TEMPLATE
-
-macosx_system_ruby_task: 
-  macos_instance:
-    image: ghcr.io/cirruslabs/macos-ventura-base:latest
-  pre_req_script: 
-    - ruby --version
-    - bundler --version
-    - gem install rspec
   << : *BUILD_TEST_TASK_TEMPLATE

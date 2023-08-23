@@ -9,7 +9,8 @@ module PactFfi
   module Verifier
     extend FFI::Library
     ffi_lib DetectOS.get_bin_path
-    DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+    # DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
+    (typedef :uint32, :uint32_type) 
 
     # /*
     #  * | Error | Description |
