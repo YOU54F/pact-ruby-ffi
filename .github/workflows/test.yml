@@ -44,8 +44,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
-        # with: # gRPC demo requires Ruby < 3.0
-        #   ruby-version: ${{ matrix.ruby-version }}
+        with: # gRPC demo requires Ruby < 3.0
+          ruby-version: ${{ matrix.ruby-version }}
       - run: gem update bundler
       - run: make install
       - run: make download_all_libs
