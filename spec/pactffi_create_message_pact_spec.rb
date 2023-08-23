@@ -4,10 +4,9 @@ require 'pact/ffi/logger'
 require 'pact/ffi/mock_server'
 require 'pact/ffi/http_consumer'
 require 'fileutils'
+require 'uri'
 
 PactFfi::Logger.log_to_buffer(PactFfi::Logger::LogLevel['ERROR'])
-MockServer = PactFfi::MockServer
-PactHttpConsumer = PactFfi::HttpConsumer
 
 RSpec.describe 'new_message spec' do
   describe 'with matching requests' do

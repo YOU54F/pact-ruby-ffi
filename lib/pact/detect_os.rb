@@ -1,43 +1,31 @@
 module DetectOS
   def self.windows?
     return if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RbConfig::CONFIG['arch']).nil?
-
-    puts 'detected windows'
     true
   end
 
   def self.mac_arm?
     return unless !(/darwin/ =~ RbConfig::CONFIG['arch']).nil? && !(/arm64/ =~ RbConfig::CONFIG['arch']).nil?
-
-    puts 'detected macos arm'
     true
   end
 
   def self.mac?
     return unless !(/darwin/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?
-
-    puts 'detected macos'
     true
   end
 
   def self.linux_arm?
     return unless !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/aarch64/ =~ RbConfig::CONFIG['arch']).nil?
-
-    puts 'detected linux aarch64'
     true
   end
 
   def self.linux?
     return unless !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?
-
-    puts 'detected linux'
     true
   end
 
   def self.debug?
     return if ENV['DEBUG_TARGET'].nil?
-
-    puts 'detected debug target' + ENV['DEBUG_TARGET']
     true
   end
 
@@ -76,4 +64,4 @@ module DetectOS
   end
 end
 
-puts DetectOS.get_bin_path
+ENV['PACT_DEBUG'] ? (puts "Detected platform: #{RbConfig::CONFIG['arch']} \nLoad Path: #{DetectOS.get_bin_path}" ): nil
