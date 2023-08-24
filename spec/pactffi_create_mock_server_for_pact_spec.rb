@@ -6,8 +6,6 @@ require 'pact/ffi/http_consumer'
 require 'fileutils'
 
 PactFfi::Logger.log_to_buffer(PactFfi::Logger::LogLevel['ERROR'])
-MockServer = PactFfi::MockServer
-PactHttpConsumer = PactFfi::HttpConsumer
 
 RSpec.describe 'create_mock_server_for_pact spec' do
   describe 'with matching requests' do
@@ -72,29 +70,29 @@ RSpec.describe 'create_mock_server_for_pact spec' do
       '
     end
 
-    let(:mock_server_port) { MockServer.create_for_pact(pact, '127.0.0.1:0', false) }
-    let(:pact) { PactHttpConsumer.new_pact('http-consumer-1', 'http-provider') }
-    let(:interaction) { PactHttpConsumer.new_interaction(pact, 'A POST request to create book') }
+    let(:mock_server_port) { PactFfi::MockServer.create_for_pact(pact, '127.0.0.1:0', false) }
+    let(:pact) { PactFfi.new_pact('http-consumer-1', 'http-provider') }
+    let(:interaction) { PactFfi::HttpConsumer.new_interaction(pact, 'A POST request to create book') }
 
     before do
-      PactHttpConsumer.with_specification(pact, PactFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V3'])
-      PactHttpConsumer.upon_receiving(interaction, 'A POST request to create book')
-      PactHttpConsumer.given(interaction, 'No book fixtures required')
-      PactHttpConsumer.with_request(interaction, 'POST', '/api/books')
-      PactHttpConsumer.with_header(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_REQUEST'],
+      PactFfi::HttpConsumer.with_specification(pact, PactFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V3'])
+      PactFfi::HttpConsumer.upon_receiving(interaction, 'A POST request to create book')
+      PactFfi::HttpConsumer.given(interaction, 'No book fixtures required')
+      PactFfi::HttpConsumer.with_request(interaction, 'POST', '/api/books')
+      PactFfi::HttpConsumer.with_header(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_REQUEST'],
                                    'Content-Type', 0, 'application/json')
-      PactHttpConsumer.with_body(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_REQUEST'],
+      PactFfi::HttpConsumer.with_body(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_REQUEST'],
                                  'application/json', request_interaction_body)
-      PactHttpConsumer.response_status(interaction, 201)
-      PactHttpConsumer.with_header(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_RESPONSE'],
+      PactFfi::HttpConsumer.response_status(interaction, 201)
+      PactFfi::HttpConsumer.with_header(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_RESPONSE'],
                                    'Content-Type', 0, 'application/ld+json; charset=utf-8')
-      PactHttpConsumer.with_body(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_RESPONSE'],
+      PactFfi::HttpConsumer.with_body(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_RESPONSE'],
                                  'application/ld+json; charset=utf-8', response_interaction_body)
     end
     after do
-      expect(MockServer.matched(mock_server_port)).to be true
-      res_write_pact = MockServer.write_pact_file(mock_server_port, './pacts', false)
-      MockServer.cleanup(mock_server_port)
+      expect(PactFfi::MockServer.matched(mock_server_port)).to be true
+      res_write_pact = PactFfi::MockServer.write_pact_file(mock_server_port, './pacts', false)
+      PactFfi::MockServer.cleanup(mock_server_port)
       expect(res_write_pact).to be(0)
     end
 
@@ -196,30 +194,30 @@ RSpec.describe 'create_mock_server_for_pact spec' do
       '
     end
 
-    let(:mock_server_port) { MockServer.create_for_pact(pact, '127.0.0.1:0', false) }
+    let(:mock_server_port) { PactFfi::MockServer.create_for_pact(pact, '127.0.0.1:0', false) }
     let(:pact) { PactFfi.new_pact('http-consumer-1', 'http-provider') }
-    let(:interaction) { PactFfi.new_interaction(pact, 'A POST request to create book') }
+    let(:interaction) { PactFfi::HttpConsumer.new_interaction(pact, 'A POST request to create book') }
     before do
-      PactHttpConsumer.with_specification(pact, PactFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V3'])
-      PactHttpConsumer.upon_receiving(interaction, 'A POST request to create book')
-      PactHttpConsumer.given(interaction, 'No book fixtures required')
-      PactHttpConsumer.with_request(interaction, 'POST', '/api/books')
-      PactHttpConsumer.with_header(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_REQUEST'],
+      PactFfi::HttpConsumer.with_specification(pact, PactFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V3'])
+      PactFfi::HttpConsumer.upon_receiving(interaction, 'A POST request to create book')
+      PactFfi::HttpConsumer.given(interaction, 'No book fixtures required')
+      PactFfi::HttpConsumer.with_request(interaction, 'POST', '/api/books')
+      PactFfi::HttpConsumer.with_header(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_REQUEST'],
                                    'Content-Type', 0, 'application/json')
-      PactHttpConsumer.with_body(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_REQUEST'],
+      PactFfi::HttpConsumer.with_body(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_REQUEST'],
                                  'application/json', request_interaction_body)
-      PactHttpConsumer.response_status(interaction, 201)
-      PactHttpConsumer.with_header(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_RESPONSE'],
+      PactFfi::HttpConsumer.response_status(interaction, 201)
+      PactFfi::HttpConsumer.with_header(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_RESPONSE'],
                                    'Content-Type', 0, 'application/ld+json; charset=utf-8')
-      PactHttpConsumer.with_body(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_RESPONSE'],
+      PactFfi::HttpConsumer.with_body(interaction, PactFfi::FfiInteractionPart['INTERACTION_PART_RESPONSE'],
                                  'application/ld+json; charset=utf-8', response_interaction_body)
     end
     after do
-      expect(MockServer.matched(mock_server_port)).to be false
-      mismatchers = MockServer.mismatches(mock_server_port)
+      expect(PactFfi::MockServer.matched(mock_server_port)).to be false
+      mismatchers = PactFfi::MockServer.mismatches(mock_server_port)
       puts JSON.parse(mismatchers)
       expect(JSON.parse(mismatchers).length).to eql(1)
-      MockServer.cleanup(mock_server_port)
+      PactFfi::MockServer.cleanup(mock_server_port)
     end
 
     it 'executes the pact test with errors' do

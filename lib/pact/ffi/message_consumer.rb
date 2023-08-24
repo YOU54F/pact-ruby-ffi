@@ -72,7 +72,7 @@ module PactFfi
     ]
 
     attach_function :contents_get_contents_str, :pactffi_message_contents_get_contents_str, %i[pointer], :string
-    attach_function :contents_set_contents_str,, :pactffi_message_contents_set_contents_str, %i[pointer string string], :void
+    attach_function :contents_set_contents_str, :pactffi_message_contents_set_contents_str, %i[pointer string string], :void
     attach_function :contents_get_contents_length, :pactffi_message_contents_get_contents_length, %i[pointer], :size_t
     attach_function :contents_get_contents_bin, :pactffi_message_contents_get_contents_bin, %i[pointer], :pointer
     attach_function :contents_set_contents_bin, :pactffi_message_contents_set_contents_bin, %i[pointer pointer size_t string], :void
@@ -119,7 +119,7 @@ module PactFfi
     attach_function :given_with_param, :pactffi_message_given_with_param, %i[uint32_type string string string], :void
     attach_function :with_contents, :pactffi_message_with_contents, %i[uint32_type string pointer size_t], :void
     attach_function :with_metadata, :pactffi_message_with_metadata, %i[uint32_type string string], :void
-    attach_function :rreify, :pactffi_message_reify, %i[uint32_type], :string
+    attach_function :reify, :pactffi_message_reify, %i[uint32_type], :string
     attach_function :write_message_pact_file, :pactffi_write_message_pact_file, %i[uint16 string bool], :int32
     attach_function :with_message_pact_metadata, :pactffi_with_message_pact_metadata, %i[uint16 string string string], :void
     attach_function :free_handle, :pactffi_free_message_pact_handle, %i[uint16], :uint32_type

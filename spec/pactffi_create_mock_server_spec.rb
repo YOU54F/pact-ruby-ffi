@@ -5,7 +5,6 @@ require 'pact/ffi/mock_server'
 require 'fileutils'
 
 PactFfi::Logger.log_to_buffer(PactFfi::Logger::LogLevel['ERROR'])
-MockServer = PactFfi::MockServer
 RSpec.describe 'pactffi_create_mock_server spec' do
   describe 'with matching requests' do
     let(:pact) do
@@ -46,12 +45,12 @@ RSpec.describe 'pactffi_create_mock_server spec' do
       '
     end
 
-    let(:mock_server_port) { MockServer.create(pact, '127.0.0.1:4432',false) }
+    let(:mock_server_port) { PactFfi::MockServer.create(pact, '127.0.0.1:4432',false) }
 
     after do
-      expect(MockServer.matched(mock_server_port)).to be true
-      res_write_pact = MockServer.write_pact_file(mock_server_port, './pacts', false)
-      MockServer.cleanup(mock_server_port)
+      expect(PactFfi::MockServer.matched(mock_server_port)).to be true
+      res_write_pact = PactFfi::MockServer.write_pact_file(mock_server_port, './pacts', false)
+      PactFfi::MockServer.cleanup(mock_server_port)
       expect(res_write_pact).to be(0)
     end
 
@@ -119,20 +118,20 @@ RSpec.describe 'pactffi_create_mock_server spec' do
     end
 
     # this fails in CI as http client cannot connect to mock server
-    let(:mock_server_port) { MockServer.create(pact, '0.0.0.0:0',false) }
+    let(:mock_server_port) { PactFfi::MockServer.create(pact, '0.0.0.0:0',false) }
 
     after do
-      expect(MockServer.matched(mock_server_port)).to be false
-      mismatchers = MockServer.mismatches(mock_server_port)
+      expect(PactFfi::MockServer.matched(mock_server_port)).to be false
+      mismatchers = PactFfi::MockServer.mismatches(mock_server_port)
       puts JSON.parse(mismatchers)
       expect(JSON.parse(mismatchers).length).to eql(2)
-      MockServer.cleanup(mock_server_port)
+      PactFfi::MockServer.cleanup(mock_server_port)
     end
 
     it 'returns the mismatches' do
       puts "Mock server port=#{mock_server_port}"
 
-      expect(MockServer.matched(mock_server_port)).to be false
+      expect(PactFfi::MockServer.matched(mock_server_port)).to be false
 
       response1 = HTTParty.post("http://localhost:#{mock_server_port}/",
                                 headers: { 'Content-Type': 'application/json' }, body: '{}')
