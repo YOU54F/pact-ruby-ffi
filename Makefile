@@ -19,23 +19,23 @@ download_all_libs:
 	./script/download-all-libs.sh
 
 test: 
-	rake spec
+	bundle exec rspec spec/*
 
 test_message_pact: 
-	rspec spec/pactffi_create_message_pact_spec.rb
+	bundle exec rspec spec/pactffi_create_message_pact_spec.rb
 
 show_message_pact:
 	cat pacts/message-consumer-2-message-provider.json | jq .  && \
 	cat pacts/http-consumer-2-http-provider.json | jq . \
 
 test_pactffi_create_mock_server_for_pact: 
-	rspec spec/pactffi_create_mock_server_for_pact_spec.rb
+	bundle exec rspec spec/pactffi_create_mock_server_for_pact_spec.rb
 
 show_pactffi_create_mock_server_for_pact:
 	cat pacts/http-consumer-1-http-provider.json | jq .
 
 test_pactffi_create_mock_server: 
-	rspec spec/pactffi_create_mock_server_spec.rb
+	bundle exec rspec spec/pactffi_create_mock_server_spec.rb
 
 show_pactffi_create_mock_server:
 	cat "pacts/Consumer-pact-ruby-ffi-Alice Service.json" | jq .
@@ -43,11 +43,12 @@ show_pactffi_create_mock_server:
 install_protobuf_plugin:
 	pact/plugin/pact-plugin-cli -y install https://github.com/pactflow/pact-protobuf-plugin/releases/latest
 
+grpc: install_demo_grpc test_demo_gprc_pact verify_demo_gprc_local
 install_demo_grpc:
 	cd examples/area_calculator && bundle install
 
 test_demo_gprc_pact:
-	rspec examples/area_calculator/spec/pactffi_create_plugin_pact_spec.rb
+	cd examples/area_calculator && bundle exec rspec spec/pactffi_create_plugin_pact_spec.rb
 
 show_demo_gprc_pact:
 	cat pacts/grpc-consumer-ruby-area-calculator-provider.json | jq .
@@ -59,7 +60,7 @@ start_demo_gprc_consumer:
 	ruby examples/area_calculator/area_calculator_consumer_run.rb
 
 verify_demo_gprc_local:
-	TEST_COMMAND='pact/verifier/pact_verifier_cli -f pacts/grpc-consumer-ruby-area-calculator-provider.json -p 37757 -l info' \
+	TEST_COMMAND='pact/verifier/pact_verifier_cli -f examples/area_calculator/pacts/grpc-consumer-ruby-area-calculator-provider.json -p 37757 -l info' \
 	make start_server_and_test
 
 start_broker:
@@ -103,3 +104,11 @@ verify_demo_gprc_fetch_broker:
 
 start_server_and_test:
 	./start_server_and_test.sh
+
+cirrus_macos:
+	cirrus run --output simple 'macos_arm64'
+cirrus_linux_arm:
+	cirrus run --output simple 'linux_arm64'
+	# cirrus run --output simple 'linux_arm64 IMAGE:ruby:3.0 container:ruby:3.0'
+cirrus_linux_amd:
+	cirrus run --output simple 'linux_amd64'

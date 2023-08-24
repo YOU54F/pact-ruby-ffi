@@ -50,18 +50,25 @@ mkdir -p "${STANDALONE_DIR}"
 detected_os=$(uname -sm)
 echo detected_os = $detected_os
 case ${detected_os} in
+'Linux aarch64')
+    echo 'using linux-x86_64'
+    download_standalone "pact-${STANDALONE_VERSION}-linux-arm64.tar.gz"  "linux-arm64-${STANDALONE_VERSION}.tar.gz"
+    ;;
 'Linux x86_64' | "Linux"*)
     echo 'using linux-x86_64'
-    download_standalone "pact-${STANDALONE_VERSION}-linux-x86_64.tar.gz"  "linux-x64-${STANDALONE_VERSION}.tar.gz"
+  download_standalone "pact-${STANDALONE_VERSION}-linux-x86_64.tar.gz"  "linux-x64-${STANDALONE_VERSION}.tar.gz"
     ;;
-'Darwin x86' | 'Darwin x86_64' | 'Darwin arm64' | "Darwin"*)
+'Darwin arm64')
     echo 'using osx'
-    download_standalone "pact-${STANDALONE_VERSION}-osx.tar.gz"           "darwin-${STANDALONE_VERSION}.tar.gz"
+  download_standalone "pact-${STANDALONE_VERSION}-osx-arm64.tar.gz"           "darwin-arm64-${STANDALONE_VERSION}.tar.gz"
+    ;;
+'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
+    echo 'using osx'
+  download_standalone "pact-${STANDALONE_VERSION}-osx-x86_64.tar.gz"           "darwin-x64-${STANDALONE_VERSION}.tar.gz"
     ;;
 "Windows"* | "MINGW64"*)
     echo 'using win32'
-    os='win32'
-    download_standalone "pact-${STANDALONE_VERSION}-win32.zip"            "win32-${STANDALONE_VERSION}.zip"
+    download_standalone "pact-${STANDALONE_VERSION}-windows-x86_64.zip"            "windows-x64-${STANDALONE_VERSION}.zip"
     ;;
   *)
   echo "Sorry, you'll need to install the pact-ruby-standalone manually."

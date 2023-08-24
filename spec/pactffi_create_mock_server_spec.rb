@@ -1,7 +1,10 @@
 require 'httparty'
-require 'pact/ffi'
+# require 'pact/ffi'
+require 'pact/ffi/logger'
+require 'pact/ffi/mock_server'
 require 'fileutils'
 
+PactFfi::Logger.log_to_buffer(PactFfi::Logger::LogLevel['ERROR'])
 RSpec.describe 'pactffi_create_mock_server spec' do
   describe 'with matching requests' do
     let(:pact) do
@@ -42,25 +45,12 @@ RSpec.describe 'pactffi_create_mock_server spec' do
       '
     end
 
-    let(:mock_server_port) { PactFfi.pactffi_create_mock_server(pact, '127.0.0.1:4432',false) }
+    let(:mock_server_port) { PactFfi::MockServer.create(pact, '127.0.0.1:4432',false) }
 
-    before do
-      # PactFfi.pactffi_init_with_log_level('oso')
-      PactFfi.pactffi_logger_init
-      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
-      PactFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
-                                             PactFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
-      PactFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',
-                                             PactFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
-      PactFfi.pactffi_logger_attach_sink('stdout', PactFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
-      PactFfi.pactffi_logger_attach_sink('stderr', PactFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
-      PactFfi.pactffi_logger_apply
-      # PactFfi.pactffi_init(PactFfi::FfiLogLevel['LOG_LEVEL_INFO'])
-    end
     after do
-      expect(PactFfi.pactffi_mock_server_matched(mock_server_port)).to be true
-      res_write_pact = PactFfi.pactffi_write_pact_file(mock_server_port, './pacts', false)
-      PactFfi.pactffi_cleanup_mock_server(mock_server_port)
+      expect(PactFfi::MockServer.matched(mock_server_port)).to be true
+      res_write_pact = PactFfi::MockServer.write_pact_file(mock_server_port, './pacts', false)
+      PactFfi::MockServer.cleanup(mock_server_port)
       expect(res_write_pact).to be(0)
     end
 
@@ -74,18 +64,6 @@ RSpec.describe 'pactffi_create_mock_server spec' do
   end
 
   describe 'with mismatching requests' do
-    before do
-      PactFfi.pactffi_logger_init
-      FileUtils.mkdir_p 'logs' unless File.directory?('logs')
-      PactFfi.pactffi_logger_attach_sink('file ./logs/log.txt',
-                                             PactFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
-      PactFfi.pactffi_logger_attach_sink('file ./logs/log-error.txt',
-                                             PactFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
-      PactFfi.pactffi_logger_attach_sink('stdout', PactFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
-      PactFfi.pactffi_logger_attach_sink('stderr', PactFfi::FfiLogLevelFilter['LOG_LEVEL_DEBUG'])
-      PactFfi.pactffi_logger_apply
-      # PactFfi.pactffi_init(PactFfi::FfiLogLevel['LOG_LEVEL_INFO'])
-    end
     let(:pact) do
       '
       {
@@ -140,20 +118,20 @@ RSpec.describe 'pactffi_create_mock_server spec' do
     end
 
     # this fails in CI as http client cannot connect to mock server
-    let(:mock_server_port) { PactFfi.pactffi_create_mock_server(pact, '0.0.0.0:0',false) }
+    let(:mock_server_port) { PactFfi::MockServer.create(pact, '0.0.0.0:0',false) }
 
     after do
-      expect(PactFfi.pactffi_mock_server_matched(mock_server_port)).to be false
-      mismatchers = PactFfi.pactffi_mock_server_mismatches(mock_server_port)
+      expect(PactFfi::MockServer.matched(mock_server_port)).to be false
+      mismatchers = PactFfi::MockServer.mismatches(mock_server_port)
       puts JSON.parse(mismatchers)
       expect(JSON.parse(mismatchers).length).to eql(2)
-      PactFfi.pactffi_cleanup_mock_server(mock_server_port)
+      PactFfi::MockServer.cleanup(mock_server_port)
     end
 
     it 'returns the mismatches' do
       puts "Mock server port=#{mock_server_port}"
 
-      expect(PactFfi.pactffi_mock_server_matched(mock_server_port)).to be false
+      expect(PactFfi::MockServer.matched(mock_server_port)).to be false
 
       response1 = HTTParty.post("http://localhost:#{mock_server_port}/",
                                 headers: { 'Content-Type': 'application/json' }, body: '{}')

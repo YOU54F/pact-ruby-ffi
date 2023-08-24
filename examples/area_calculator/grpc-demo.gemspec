@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'google-protobuf', '~> 3.21'
   s.add_dependency 'grpc', '~> 1.5'
+  s.add_development_dependency 'rspec', '~> 3.0'
   s.add_dependency 'multi_json', '~> 1.13.1'
   s.add_development_dependency 'bundler', '>= 1.9'
   s.add_development_dependency 'pact-ffi', '>= 0.1.0'
