@@ -23,14 +23,14 @@ linux_amd64_task:
     matrix:
       - IMAGE: ruby:3.2
       - IMAGE: ruby:3.1
-      - IMAGE: ruby:3.0
-      - IMAGE: ruby:2.7
-      - IMAGE: ruby:2.6
+      # - IMAGE: ruby:3.0 # needs GLIBC_2.32
+      # - IMAGE: ruby:2.7 # needs GLIBC_2.32
+      # - IMAGE: ruby:2.6 # needs GLIBC_2.32
   container:
     image: $IMAGE
     architecture: amd64
   install_script: 
-      - apt update --yes && apt install --yes jq protobuf-compiler
+      - apt update --yes && apt install --yes jq protobuf-compiler libc6
       - ruby --version
       - bundler --version
   << : *BUILD_TEST_TASK_TEMPLATE

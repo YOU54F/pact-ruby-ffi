@@ -1,4 +1,4 @@
-require 'thin'
+require 'webrick'
 require 'json'
 require 'optparse'
 
@@ -13,25 +13,32 @@ end.parse!
 
 port = options[:port] || 8000
 
-app = lambda do |env|
-  if env['REQUEST_METHOD'] == 'POST' && env['PATH_INFO'] == '/api/books'
-    [201, { 'Content-Type' => 'application/ld+json;charset=utf-8' },
-     [JSON.generate({
-                      "author": 'Margaret Atwood',
-                      "description": 'Brilliantly',
-                      "isbn": '0099740915',
-                      "publicationDate": '1985-07-31T00:00:00+00:00',
-                      "title": "The Handmaid's Tale",
-                      "@type": 'Book',
-                      "@id": '/api/books/0114b2a8-3347-49d8-ad99-0e792c5a30e6',
-                      "reviews": [],
-                      "@context": '/api/contexts/Book'
-                    })]]
+server = WEBrick::HTTPServer.new(Port: port)
+
+server.mount_proc '/api/books' do |req, res|
+  if req.request_method == 'POST'
+    res.status = 201
+    res['Content-Type'] = 'application/ld+json;charset=utf-8'
+    res.body = JSON.generate({
+      "author": 'Margaret Atwood',
+      "description": 'Brilliantly',
+      "isbn": '0099740915',
+      "publicationDate": '1985-07-31T00:00:00+00:00',
+      "title": "The Handmaid's Tale",
+      "@type": 'Book',
+      "@id": '/api/books/0114b2a8-3347-49d8-ad99-0e792c5a30e6',
+      "reviews": [],
+      "@context": '/api/contexts/Book'
+    })
   else
-    [404, { 'Content-Type' => 'text/plain' }, ['Not found']]
+    res.status = 404
+    res['Content-Type'] = 'text/plain'
+    res.body = 'Not found'
   end
 end
 
-Thin::Server.start('0.0.0.0', port, app)
+trap('INT') { server.shutdown }
+
+server.start
 
 puts "Server listening on port #{port}"

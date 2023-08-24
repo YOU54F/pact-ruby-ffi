@@ -1,37 +1,42 @@
 require 'net/http'
 require 'uri'
-require 'thin'
+require 'webrick'
 require 'pact/ffi/verifier'
 require 'pact/ffi/logger'
 require 'json'
 PactFfi::Logger.log_to_stdout(PactFfi::Logger::LogLevel['INFO'])
 RSpec.describe 'pactffi verifier spec' do
-  before do
+  before(:all) do
     @server_thread = Thread.new do
-      app = lambda do |env|
-        if env['REQUEST_METHOD'] == 'POST' && env['PATH_INFO'] == '/api/books'
-          [201, { 'Content-Type' => 'application/ld+json;charset=utf-8' },
-           [JSON.generate({
-                            "author": 'Margaret Atwood',
-                            "description": 'Brilliantly',
-                            "isbn": '0099740915',
-                            "publicationDate": '1985-07-31T00:00:00+00:00',
-                            "title": "The Handmaid's Tale",
-                            "@type": 'Book',
-                            "@id": '/api/books/0114b2a8-3347-49d8-ad99-0e792c5a30e6',
-                            "reviews": [],
-                            "@context": '/api/contexts/Book'
-                          })]]
+      server = WEBrick::HTTPServer.new(Port: 8000)
+      server.mount_proc '/api/books' do |req, res|
+        if req.request_method == 'POST'
+          res.status = 201
+          res['Content-Type'] = 'application/ld+json;charset=utf-8'
+          res.body = JSON.generate({
+            "author": 'Margaret Atwood',
+            "description": 'Brilliantly',
+            "isbn": '0099740915',
+            "publicationDate": '1985-07-31T00:00:00+00:00',
+            "title": "The Handmaid's Tale",
+            "@type": 'Book',
+            "@id": '/api/books/0114b2a8-3347-49d8-ad99-0e792c5a30e6',
+            "reviews": [],
+            "@context": '/api/contexts/Book'
+          })
         else
-          [404, { 'Content-Type' => 'text/plain' }, ['Not found']]
+          res.status = 404
+          res['Content-Type'] = 'text/plain'
+          res.body = 'Not found'
         end
       end
-      Thin::Server.start(8000, app)
+      server.start
     end
   end
   let(:verifier) { PactFfi::Verifier.new_for_application('pact-ruby', '1.0.0') }
   after do
     PactFfi::Verifier.shutdown(verifier)
+    @server_thread.kill
   end
   it 'should respond verify with pact' do
     sleep 1
