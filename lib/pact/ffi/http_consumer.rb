@@ -31,7 +31,10 @@ module PactFfi
     attach_function :response_status, :pactffi_response_status, %i[uint32_type uint16], :bool
     attach_function :with_body, :pactffi_with_body, %i[uint32_type int32 string string], :bool
     attach_function :with_binary_file, :pactffi_with_binary_file, %i[uint32_type int32 string pointer size_t], :bool
-    attach_function :with_multipart_file, :pactffi_with_multipart_file, %i[uint32_type int32 string string string],
-                    :pointer
+    attach_function :with_multipart_file, :pactffi_with_multipart_file, %i[uint32_type int32 string string string], :pointer
+    attach_function :set_header, :pactffi_set_header, %i[uint32_type int32 string string], :bool
+    attach_function :with_binary_body, :pactffi_with_binary_body, %i[uint32_type int32 string pointer size_t], :bool
+    attach_function :with_matching_rules, :pactffi_with_matching_rules, %i[uint32_type int32 string], :bool
+    attach_function :with_multipart_file_v2, :pactffi_with_multipart_file_v2, %i[uint32_type int32 string string string string], :pointer
   end
 end

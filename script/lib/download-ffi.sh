@@ -10,24 +10,16 @@ require_env_var FFI_VERSION
 
 BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
 FFI_DIR="ffi"
-mkdir -p "$FFI_DIR/macos-arm64"
-mkdir -p "$FFI_DIR/linux-arm64"
-mkdir -p "$FFI_DIR/macos-x64"
-mkdir -p "$FFI_DIR/linux-x64"
-mkdir -p "$FFI_DIR/windows-x64"
-
-# if [[ $(find "${FFI_DIR}" -name "${FFI_VERSION}*") ]]; then
-#   log "Skipping download of FFI libraries ${FFI_VERSION}, as they exist"
-#   exit 0
-# fi
 
 warn "Cleaning ffi directory $FFI_DIR"
 rm -rf "${FFI_DIR:?}"
 mkdir -p "$FFI_DIR/macos-arm64"
-mkdir -p "$FFI_DIR/linux-arm64"
 mkdir -p "$FFI_DIR/macos-x64"
-mkdir -p "$FFI_DIR/linux-x64"
 mkdir -p "$FFI_DIR/windows-x64"
+mkdir -p "$FFI_DIR/linux-x64"
+mkdir -p "$FFI_DIR/linux-arm64"
+mkdir -p "$FFI_DIR/linux-x64-musl"
+mkdir -p "$FFI_DIR/linux-arm64-musl"
 
 function download_ffi_file {
   if [ -z "${1:-}" ]; then
@@ -66,6 +58,8 @@ function download_ffi {
 if [ -z "${ONLY_DOWNLOAD_PACT_FOR_WINDOWS:-}" ]; then
   download_ffi "linux-x86_64.so.gz" "lib" "linux-x64/libpact_ffi.so.gz"
   download_ffi "linux-aarch64.so.gz" "lib" "linux-arm64/libpact_ffi.so.gz"
+  download_ffi "linux-x86_64-musl.so.gz" "lib" "linux-x64-musl/libpact_ffi.so.gz"
+  download_ffi "linux-aarch64-musl.so.gz" "lib" "linux-arm64-musl/libpact_ffi.so.gz"
   download_ffi "osx-x86_64.dylib.gz" "lib" "macos-x64/libpact_ffi.dylib.gz"
   download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "macos-arm64/libpact_ffi.dylib.gz"
 else

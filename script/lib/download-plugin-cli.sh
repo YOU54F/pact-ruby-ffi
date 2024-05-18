@@ -72,32 +72,32 @@ detected_os=$(uname -sm)
 echo detected_os = $detected_os
 case ${detected_os} in
 'Darwin arm64')
-    echo "downloading of osx aarch64 FFI libs"
+    echo "downloading of osx aarch64 plugin cli"
     os='osx-aarch64'
     download_plugin_cli "osx-aarch64.gz" "" "pact-plugin-cli.gz" "${os}"
     ;;
 'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
-    echo "downloading of osx x86_64 FFI libs"
+    echo "downloading of osx x86_64 plugin cli"
     os='osx-x86_64'
     download_plugin_cli "osx-x86_64.gz" "" "pact-plugin-cli.gz" "${os}"
     ;;
 "Linux aarch64"* | "Linux arm64"*)
-    echo "downloading of linux aarch64 FFI libs"
+    echo "downloading of linux aarch64 plugin cli"
     os='linux-aarch64'
     download_plugin_cli "linux-aarch64.gz" "" "pact-plugin-cli.gz" "${os}"
     ;;
 'Linux x86_64' | "Linux"*)
-    echo "downloading of linux x86_64 FFI libs"
+    echo "downloading of linux x86_64 plugin cli"
     os='linux-x86_64'
     download_plugin_cli "linux-x86_64.gz" "" "pact-plugin-cli.gz" "${os}"
     ;;
 "Windows"* | "MINGW64"*)
-    echo "downloading of windows x86_64 FFI libs"
+    echo "downloading of windows x86_64 plugin cli"
     os='win32'
     download_plugin_cli "windows-x86_64.exe.gz" "" "pact-plugin-cli.exe.gz" "${os}"
     ;;
   *)
-  echo "Sorry, you'll need to install the pact-ruby-standalone manually."
+  echo "Sorry, you'll need to install the plugin cli manually."
   echo "or add your os to the list"
   exit 1
     ;;

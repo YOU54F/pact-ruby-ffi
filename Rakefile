@@ -26,6 +26,11 @@ PLATFORMS = [
     ffi_name: 'libpact_ffi.so'
   },
   {
+    ruby_platform: 'aarch64-linux-musl',
+    ffi_location: 'linux-arm64-musl',
+    ffi_name: 'libpact_ffi.a'
+  },
+  {
     ruby_platform: 'arm64-darwin',
     ffi_location: 'macos-arm64',
     ffi_name: 'libpact_ffi.dylib'
@@ -34,6 +39,11 @@ PLATFORMS = [
     ruby_platform: 'x86_64-linux',
     ffi_location: 'linux-x64',
     ffi_name: 'libpact_ffi.so'
+  },
+  {
+    ruby_platform: 'x86_64-linux-musl',
+    ffi_location: 'linux-x64-musl',
+    ffi_name: 'libpact_ffi.a'
   },
   {
     ruby_platform: 'x86_64-darwin',
@@ -45,21 +55,6 @@ PLATFORMS = [
     ffi_location: 'windows-x64',
     ffi_name: 'pact_ffi.dll'
   }
-  #   {
-  #     ruby_platform: 'arm-linux',
-  #     ffi_location: 'linux-arm',
-  #     ffi_name: 'libpact_ffi.so'
-  #   },
-  #   {
-  #     ruby_platform: 'x86-linux',
-  #     ffi_location: 'linux-x86',
-  #     ffi_name: 'libpact_ffi.so'
-  #   },
-  #   {
-  #     ruby_platform: 'x86-mingw32',
-  #     ffi_location: 'windows-x86',
-  #     ffi_name: 'pact_ffi.dll'
-  #   }
 ]
 task :build do
   gemspec = Gem::Specification.load('pact-ffi.gemspec')
@@ -81,17 +76,21 @@ task :clean do
 end
 
 task :yank do
-  sh 'gem yank pact-ffi -v 0.0.1 --platform aarch64-linux'
   sh 'gem yank pact-ffi -v 0.0.1 --platform arm64-darwin'
   sh 'gem yank pact-ffi -v 0.0.1 --platform x64-mingw-ucrt'
   sh 'gem yank pact-ffi -v 0.0.1 --platform x86_64-darwin'
+  sh 'gem yank pact-ffi -v 0.0.1 --platform aarch64-linux'
   sh 'gem yank pact-ffi -v 0.0.1 --platform x86_64-linux'
+  sh 'gem yank pact-ffi -v 0.0.1 --platform aarch64-linux-musl'
+  sh 'gem yank pact-ffi -v 0.0.1 --platform x86_64-linux-musl'
 end
 
 task :push do
-  sh 'cd pkg && gem push pact-ffi-0.0.3-aarch64-linux.gem'
-  sh 'cd pkg && gem push pact-ffi-0.0.3-arm64-darwin.gem'
-  sh 'cd pkg && gem push pact-ffi-0.0.3-x64-mingw-ucrt.gem'
-  sh 'cd pkg && gem push pact-ffi-0.0.3-x86_64-darwin.gem'
-  sh 'cd pkg && gem push pact-ffi-0.0.3-x86_64-linux.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.4-arm64-darwin.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.4-x64-mingw-ucrt.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.4-x86_64-darwin.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.4-aarch64-linux.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.4-x86_64-linux.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.4-aarch64-linux-musl.gem'
+  sh 'cd pkg && gem push pact-ffi-0.0.4-x86_64-linux-musl.gem'
 end

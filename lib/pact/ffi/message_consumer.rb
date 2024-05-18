@@ -124,5 +124,6 @@ module PactFfi
     attach_function :with_message_pact_metadata, :pactffi_with_message_pact_metadata, %i[uint16 string string string], :void
     attach_function :free_handle, :pactffi_free_message_pact_handle, %i[uint16], :uint32_type
     attach_function :pact_handle_get_message_iter, :pactffi_pact_handle_get_message_iter, %i[uint16], :pointer
+    attach_function :with_metadata_v2, :pactffi_message_with_metadata_v2, %i[uint32_type string string], :void
   end
 end

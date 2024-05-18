@@ -18,7 +18,13 @@ FFI_DIR="ffi"
 
 warn "Cleaning ffi directory $FFI_DIR"
 rm -rf "${FFI_DIR:?}"
-mkdir -p "$FFI_DIR"
+mkdir -p "$FFI_DIR/macos-arm64"
+mkdir -p "$FFI_DIR/macos-x64"
+mkdir -p "$FFI_DIR/windows-x64"
+mkdir -p "$FFI_DIR/linux-x64"
+mkdir -p "$FFI_DIR/linux-arm64"
+mkdir -p "$FFI_DIR/linux-x64-musl"
+mkdir -p "$FFI_DIR/linux-arm64-musl"
 
 function download_ffi_file {
   if [ -z "${1:-}" ]; then
@@ -59,28 +65,55 @@ echo detected_os = $detected_os
 case ${detected_os} in
 'Darwin arm64')
     echo "downloading of osx aarch64 FFI libs"
-    download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "libpact_ffi.dylib.gz"
+    download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "macos-arm64/libpact_ffi.dylib.gz"
     os='osx-aarch64'
     ;;
 'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
     echo "downloading of osx x86_64 FFI libs"
-    download_ffi "osx-x86_64.dylib.gz" "lib" "libpact_ffi.dylib.gz"
+    download_ffi "osx-x86_64.dylib.gz" "lib" "macos-x64/libpact_ffi.dylib.gz"
     os='osx-x86_64'
     ;;
 "Linux aarch64"* | "Linux arm64"*)
     echo "downloading of linux aarch64 FFI libs"
-    download_ffi "linux-aarch64.so.gz" "lib" "libpact_ffi.so.gz"
-    os='linux-aarch64'
+    if ldd /bin/ls >/dev/null 2>&1; then
+        ldd_output=$(ldd /bin/ls)
+        case "$ldd_output" in
+            *musl*) 
+                os='linux-aarch64-musl'
+                download_ffi "linux-aarch64-musl.so.gz" "lib" "linux-arm64-musl/libpact_ffi.so.gz"
+                ;;
+            *) 
+                os='linux-aarch64'
+                download_ffi "linux-aarch64.so.gz" "lib" "linux-arm64/libpact_ffi.so.gz"
+                ;;
+        esac
+    else
+      os='linux-aarch64'
+      download_ffi "linux-aarch64.so.gz" "lib" "linux-arm64/libpact_ffi.so.gz"
+    fi
     ;;
 'Linux x86_64' | "Linux"*)
     echo "downloading of linux x86_64 FFI libs"
-    download_ffi "linux-x86_64.so.gz" "lib" "libpact_ffi.so.gz"
-    os='linux-x86_64'
+    if ldd /bin/ls >/dev/null 2>&1; then
+        ldd_output=$(ldd /bin/ls)
+        case "$ldd_output" in
+            *musl*) 
+                os='linux-x86_64-musl'
+                download_ffi "linux-x86_64-musl.so.gz" "lib" "linux-x64-musl/libpact_ffi.so.gz"
+                ;;
+            *) 
+                os='linux-x86_64'
+                download_ffi "linux-x86_64.so.gz" "lib" "linux-x64/libpact_ffi.so.gz"
+                ;;
+        esac
+    else
+      os='linux-x86_64'
+      download_ffi "linux-x86_64.so.gz" "lib" "linux-x64/libpact_ffi.so.gz"
+    fi
     ;;
 "Windows"* | "MINGW64"*)
     echo "downloading of windows x86_64 FFI libs"
-    download_ffi "windows-x86_64.dll.gz" "" "pact_ffi.dll.gz"
-    download_ffi "windows-x86_64.dll.lib.gz" "" "pact_ffi.dll.lib.gz"
+    download_ffi "windows-x86_64.dll.gz" "" "windows-x64/pact_ffi.dll.gz"
     os='win32'
     ;;
   *)
