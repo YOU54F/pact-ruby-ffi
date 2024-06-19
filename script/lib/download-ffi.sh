@@ -8,7 +8,7 @@ require_binary gunzip
 
 require_env_var FFI_VERSION
 
-BASEURL=https://github.com/you54f/pact-reference/releases/download
+BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
 FFI_DIR="ffi"
 
 warn "Cleaning ffi directory $FFI_DIR"
@@ -60,8 +60,8 @@ if [ -z "${ONLY_DOWNLOAD_PACT_FOR_WINDOWS:-}" ]; then
   download_ffi "linux-aarch64.so.gz" "lib" "linux-arm64/libpact_ffi.so.gz"
   download_ffi "linux-x86_64-musl.so.gz" "lib" "linux-x64-musl/libpact_ffi.so.gz"
   download_ffi "linux-aarch64-musl.so.gz" "lib" "linux-arm64-musl/libpact_ffi.so.gz"
-  download_ffi "osx-x86_64.dylib.gz" "lib" "macos-x64/libpact_ffi.dylib.gz"
-  download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "macos-arm64/libpact_ffi.dylib.gz"
+  download_ffi "macos-x86_64.dylib.gz" "lib" "macos-x64/libpact_ffi.dylib.gz"
+  download_ffi "macos-aarch64.dylib.gz" "lib" "macos-arm64/libpact_ffi.dylib.gz"
 else
   warn "Skipped download of non-windows FFI libs because ONLY_DOWNLOAD_PACT_FOR_WINDOWS is set"
 fi

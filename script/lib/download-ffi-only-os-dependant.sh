@@ -64,14 +64,14 @@ detected_os=$(uname -sm)
 echo detected_os = $detected_os
 case ${detected_os} in
 'Darwin arm64')
-    echo "downloading of osx aarch64 FFI libs"
-    download_ffi "osx-aarch64-apple-darwin.dylib.gz" "lib" "macos-arm64/libpact_ffi.dylib.gz"
-    os='osx-aarch64'
+    echo "downloading of macos aarch64 FFI libs"
+    download_ffi "macos-aarch64.dylib.gz" "lib" "macos-arm64/libpact_ffi.dylib.gz"
+    os='macos-aarch64'
     ;;
 'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
-    echo "downloading of osx x86_64 FFI libs"
-    download_ffi "osx-x86_64.dylib.gz" "lib" "macos-x64/libpact_ffi.dylib.gz"
-    os='osx-x86_64'
+    echo "downloading of macos x86_64 FFI libs"
+    download_ffi "macos-x86_64.dylib.gz" "lib" "macos-x64/libpact_ffi.dylib.gz"
+    os='macos-x86_64'
     ;;
 "Linux aarch64"* | "Linux arm64"*)
     echo "downloading of linux aarch64 FFI libs"
