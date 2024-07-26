@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files bin lib pact.gemspec CHANGELOG.md LICENSE.txt README.md`.split($/)
   spec.require_paths = ['lib']
   # spec.add_development_dependency 'bundler', '~> 2.4'
-  spec.add_development_dependency 'httparty', '~> 0.17.3'
+  spec.add_development_dependency 'httparty', '~> 0.21.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'webrick', '~> 1.8'

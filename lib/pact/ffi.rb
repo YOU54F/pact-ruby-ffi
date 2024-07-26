@@ -330,6 +330,7 @@ module PactFfi
   attach_function :message_given_with_param, :pactffi_message_given_with_param, %i[uint32_type string string string], :void
   attach_function :message_with_contents, :pactffi_message_with_contents, %i[uint32_type string pointer size_t], :void
   attach_function :message_with_metadata, :pactffi_message_with_metadata, %i[uint32_type string string], :void
+  attach_function :message_with_metadata_v2, :pactffi_message_with_metadata_v2, %i[uint32_type string string], :void
   attach_function :message_reify, :pactffi_message_reify, %i[uint32_type], :string
   attach_function :write_message_pact_file, :pactffi_write_message_pact_file, %i[uint16 string bool], :int32
   attach_function :with_message_pact_metadata, :pactffi_with_message_pact_metadata, %i[uint16 string string string], :void
@@ -372,4 +373,12 @@ module PactFfi
   attach_function :matches_bool_value, :pactffi_matches_bool_value, %i[pointer uint8 uint8 uint8], :string
   attach_function :matches_binary_value, :pactffi_matches_binary_value, %i[pointer pointer ulong_long pointer ulong_long uint8], :string
   attach_function :matches_json_value, :pactffi_matches_json_value, %i[pointer string string uint8], :string
+  attach_function :pact_handle_to_pointer, :pactffi_pact_handle_to_pointer, %i[uint16], :pointer
+  attach_function :handle_get_pact_spec_version, :pactffi_handle_get_pact_spec_version, %i[uint16], :int32
+  attach_function :with_multipart_file, :pactffi_with_multipart_file, %i[uint32_type int32 string string string], :pointer
+  attach_function :set_header, :pactffi_set_header, %i[uint32_type int32 string string], :bool
+  attach_function :with_binary_body, :pactffi_with_binary_body, %i[uint32_type int32 string pointer size_t], :bool
+  attach_function :with_matching_rules, :pactffi_with_matching_rules, %i[uint32_type int32 string], :bool
+  attach_function :with_multipart_file_v2, :pactffi_with_multipart_file_v2, %i[uint32_type int32 string string string string], :pointer
+  attach_function :message_with_metadata_v2, :pactffi_message_with_metadata_v2, %i[uint32_type string string], :void
 end

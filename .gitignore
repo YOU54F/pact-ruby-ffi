@@ -16,8 +16,11 @@ getpact.docker-compose.yml
 *.so
 *.dylib
 *.dll
+*.a
 /ffi/*.h
 /ffi/*.md
 .DS_Store
 .rspec_status
 Gemfile.lock
+*.tar.gz
+*.gz

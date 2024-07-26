@@ -14,6 +14,15 @@ module DetectOS
     true
   end
 
+  def self.linux_arm_musl?
+    return unless !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/aarch64/ =~ RbConfig::CONFIG['arch']).nil? && !(/musl/ =~ RbConfig::CONFIG['arch']).nil?
+    true
+  end
+
+  def self.linux_musl?
+    return unless !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/x86_64/ =~ RbConfig::CONFIG['arch']).nil?&& !(/musl/ =~ RbConfig::CONFIG['arch']).nil?
+    true
+  end
   def self.linux_arm?
     return unless !(/linux/ =~ RbConfig::CONFIG['arch']).nil? && !(/aarch64/ =~ RbConfig::CONFIG['arch']).nil?
     true
@@ -38,6 +47,10 @@ module DetectOS
       File.join(__dir__, '../../ffi/macos-arm64/libpact_ffi.dylib')
     elsif mac?
       File.join(__dir__, '../../ffi/macos-x64/libpact_ffi.dylib')
+    elsif linux_arm_musl?
+      File.join(__dir__, '../../ffi/linux-arm64-musl/libpact_ffi.so')
+    elsif linux_musl?
+      File.join(__dir__, '../../ffi/linux-x64-musl/libpact_ffi.so')
     elsif linux_arm?
       File.join(__dir__, '../../ffi/linux-arm64/libpact_ffi.so')
     elsif linux?

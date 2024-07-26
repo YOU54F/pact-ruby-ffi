@@ -140,5 +140,7 @@ module PactFfi
     attach_function :matches_binary_value, :pactffi_matches_binary_value,
                     %i[pointer pointer ulong_long pointer ulong_long uint8], :string
     attach_function :matches_json_value, :pactffi_matches_json_value, %i[pointer string string uint8], :string
+    attach_function :pact_handle_to_pointer, :pactffi_pact_handle_to_pointer, %i[uint16], :pointer
+    attach_function :handle_get_pact_spec_version, :pactffi_handle_get_pact_spec_version, %i[uint16], :int32
   end
 end

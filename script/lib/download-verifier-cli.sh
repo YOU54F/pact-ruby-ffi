@@ -8,7 +8,7 @@ require_binary gunzip
 
 require_env_var VERIFIER_CLI_VERSION
 
-BASEURL=https://github.com/pact-foundation/pact-reference/releases/download
+BASEURL=https://github.com/you54f/pact-reference/releases/download
 VERIFIER_CLI_DIR="${LIB_DIR}/../../pact/verifier"
 
 if [[ $(find "${VERIFIER_CLI_DIR}" -name "${VERIFIER_CLI_VERSION}*") ]]; then
@@ -72,27 +72,27 @@ detected_os=$(uname -sm)
 echo detected_os = $detected_os
 case ${detected_os} in
 'Darwin arm64')
-    echo "downloading of osx aarch64 FFI libs"
+    echo "downloading of osx aarch64 verifier cli"
     os='osx-aarch64'
     download_verifier_cli "osx-aarch64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
-    echo "downloading of osx x86_64 FFI libs"
+    echo "downloading of osx x86_64 verifier cli"
     os='osx-x86_64'
     download_verifier_cli "osx-x86_64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 "Linux aarch64"* | "Linux arm64"*)
-    echo "downloading of linux aarch64 FFI libs"
+    echo "downloading of linux aarch64 verifier cli"
     os='linux-aarch64'
     download_verifier_cli "linux-aarch64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 'Linux x86_64' | "Linux"*)
-    echo "downloading of linux x86_64 FFI libs"
+    echo "downloading of linux x86_64 verifier cli"
     os='linux-x86_64'
     download_verifier_cli "linux-x86_64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 "Windows"* | "MINGW64"*)
-    echo "downloading of windows x86_64 FFI libs"
+    echo "downloading of windows x86_64 verifier cli"
     os='win32'
     download_verifier_cli "windows-x86_64.exe.gz" "" "pact_verifier_cli.exe.gz" "${os}"
     ;;
