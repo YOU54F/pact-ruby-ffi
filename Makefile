@@ -109,3 +109,10 @@ cirrus_linux_arm:
 	# cirrus run --output simple 'linux_arm64 IMAGE:ruby:3.0 container:ruby:3.0'
 cirrus_linux_amd:
 	cirrus run --output simple 'linux_amd64'
+
+compat_suite_pull:
+	git fetch pact-compatibility-suite main
+	git subtree pull --prefix compatibility-suite/pact-compatibility-suite pact-compatibility-suite main --squash
+
+compat_suite_push:
+	git subtree push --prefix=compatibility-suite/pact-compatibility-suite you54f-pact-compatibility-suite main
