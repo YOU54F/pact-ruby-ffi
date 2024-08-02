@@ -331,6 +331,7 @@ module PactFfi
   attach_function :message_with_contents, :pactffi_message_with_contents, %i[uint32_type string pointer size_t], :void
   attach_function :message_with_metadata, :pactffi_message_with_metadata, %i[uint32_type string string], :void
   attach_function :message_with_metadata_v2, :pactffi_message_with_metadata_v2, %i[uint32_type string string], :void
+  attach_function :with_metadata, :pactffi_with_metadata, %i[uint32_type string string int], :void
   attach_function :message_reify, :pactffi_message_reify, %i[uint32_type], :string
   attach_function :write_message_pact_file, :pactffi_write_message_pact_file, %i[uint16 string bool], :int32
   attach_function :with_message_pact_metadata, :pactffi_with_message_pact_metadata, %i[uint16 string string string], :void
@@ -381,4 +382,5 @@ module PactFfi
   attach_function :with_matching_rules, :pactffi_with_matching_rules, %i[uint32_type int32 string], :bool
   attach_function :with_multipart_file_v2, :pactffi_with_multipart_file_v2, %i[uint32_type int32 string string string string], :pointer
   attach_function :message_with_metadata_v2, :pactffi_message_with_metadata_v2, %i[uint32_type string string], :void
+  attach_function :with_generators, :pactffi_with_generators, %i[uint32_type int string], :bool
 end
