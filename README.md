@@ -87,6 +87,9 @@ Everyone interacting in the PactFfi project’s codebases, issue trackers, chat 
 
 ## Pact Compatibility Suite
 
+Help us implement the [Pact Compatibility Suite](https://github.com/pact-foundation/pact-compatibility-suite)
+
+```
 compatibility-suite/pact-compatibility-suite/features
 ├── V1
 │   ├── http_consumer.feature
@@ -112,3 +115,4 @@ compatibility-suite/pact-compatibility-suite/features
 │   ├── message_provider.feature ✅
 │   ├── synchronous_message_consumer.feature ✅
 │   └── v4.feature ✅
+```
