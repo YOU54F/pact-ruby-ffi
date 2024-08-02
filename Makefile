@@ -118,6 +118,6 @@ compat_suite_push:
 	git subtree push --prefix=compatibility-suite/pact-compatibility-suite you54f-pact-compatibility-suite main
 
 compat_suite_test_v1:
-	bundle exec cucumber -r compatibility-suite/step_definitions/steps.rb compatibility-suite/pact-compatibility-suite/features/V1
+	bundle exec cucumber --publish-quiet -r compatibility-suite/step_definitions/steps.rb compatibility-suite/pact-compatibility-suite/features/V1
 compat_suite_test_v4:
-	bundle exec cucumber -r compatibility-suite/step_definitions/steps.rb compatibility-suite/pact-compatibility-suite/features/V4
+	bundle exec cucumber --publish-quiet -r compatibility-suite/step_definitions/steps.rb compatibility-suite/pact-compatibility-suite/features/V4

@@ -7,9 +7,8 @@ require 'pact/ffi/message_consumer'
 require 'pact/ffi/sync_message_consumer'
 require 'pact/ffi/async_message_pact'
 require 'pact/ffi/verifier'
-require 'rackup'
 require 'nokogiri'
-require 'sucker_punch'
+
 PactFfi.log_to_stdout(3)
 Given('an HTTP interaction is being defined for a consumer test') do
   @pact = PactFfi::HttpConsumer.new_pact('a', 'b') if @pact.nil?
