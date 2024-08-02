@@ -9,7 +9,7 @@ RSpec.describe 'pactffi verifier spec' do
   before(:all) do
     # running in process, results in requests only hitting server when verification complete
     @pid = Process.spawn('ruby provider.rb')
-    sleep(1)
+    sleep(2)
   end
   after(:all) do
     puts @pid
@@ -22,8 +22,7 @@ RSpec.describe 'pactffi verifier spec' do
     # @server_thread.kill
   end
   it 'should respond verify with pact' do
-    sleep 1
-    PactFfi::Verifier.set_provider_info(verifier, 'http-provider', 'http', '0.0.0.0', 8000, '/')
+    PactFfi::Verifier.set_provider_info(verifier, 'http-provider', 'http', nil, 8000, '/')
     PactFfi::Verifier.add_file_source(verifier,
                                       'pacts/http-consumer-1-http-provider.json')
     result = PactFfi::Verifier.execute(verifier)
