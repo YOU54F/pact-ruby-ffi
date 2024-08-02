@@ -60,7 +60,7 @@ _note_ - Alpine is currently not supported, but is on the list
 - FFI libraries for your current platform - run `./script/download-libs.sh` to download
 
 - If testing the protobuf plugin
-  - `2.7` for protobuf/grpc example
+  - `3.0` for protobuf/grpc example
     - See <https://grpc.io/docs/languages/ruby/quickstart/> for steps
     - See `examples/proto-ruby/README.md` for notes
     - ruby-grpc is not currently, on m1 hardware for the `pact-protobuf-plugin` example
@@ -84,3 +84,31 @@ The gem is available as open source under the terms of the [MIT License](http://
 ## Code of Conduct
 
 Everyone interacting in the PactFfi project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/pact-ffi/blob/master/CODE_OF_CONDUCT.md).
+
+## Pact Compatibility Suite
+
+compatibility-suite/pact-compatibility-suite/features
+├── V1
+│   ├── http_consumer.feature
+│   └── http_provider.feature
+├── V2
+│   ├── http_consumer.feature
+│   └── http_provider.feature
+├── V3
+│   ├── generators.feature
+│   ├── http_consumer.feature
+│   ├── http_generators.feature
+│   ├── http_matching.feature
+│   ├── http_provider.feature
+│   ├── matching_rules.feature
+│   ├── message_consumer.feature
+│   └── message_provider.feature
+├── V4
+│   ├── generators.feature
+│   ├── http_consumer.feature ✅
+│   ├── http_provider.feature
+│   ├── matching_rules.feature
+│   ├── message_consumer.feature ✅
+│   ├── message_provider.feature ✅
+│   ├── synchronous_message_consumer.feature ✅
+│   └── v4.feature ✅

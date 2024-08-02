@@ -29,7 +29,7 @@ module PactFfi
     ]
 
     attach_function :verify, :pactffi_verify, %i[string], :int32
-    attach_function :new, :pactffi_verifier_new_for_application, %i[], :pointer
+    attach_function :new, :pactffi_verifier_new, %i[], :pointer
     attach_function :new_for_application, :pactffi_verifier_new_for_application, %i[string string], :pointer
     attach_function :shutdown, :pactffi_verifier_shutdown, %i[pointer], :void
     attach_function :set_provider_info, :pactffi_verifier_set_provider_info,

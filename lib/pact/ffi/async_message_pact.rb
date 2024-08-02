@@ -10,7 +10,7 @@ module PactFfi
     # DetectOS.windows? || DetectOS.linux_arm? ? (typedef :uint32, :uint32_type) : (typedef :uint32_t, :uint32_type)
     (typedef :uint32, :uint32_type)
 
-    attach_function :new, :pactffi_async_message_new, %i[], :pointer
+    attach_function :new_async_message, :pactffi_async_message_new, %i[], :pointer
     attach_function :delete, :pactffi_async_message_delete, %i[pointer], :void
     attach_function :get_contents, :pactffi_async_message_get_contents, %i[pointer], :pointer
     attach_function :get_contents_str, :pactffi_async_message_get_contents_str, %i[pointer], :string

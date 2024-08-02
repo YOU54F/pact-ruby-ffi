@@ -70,6 +70,10 @@ module PactFfi
       'RESULT_FAILED' => 1,
     ]
 
+    attach_function :add_text_comment, :pactffi_add_text_comment, %i[uint32_type string], :bool
+    attach_function :set_comment, :pactffi_set_comment, %i[uint32_type string string], :bool
+    attach_function :set_pending, :pactffi_set_pending, %i[uint32_type bool], :bool
+    attach_function :set_key, :pactffi_set_key, %i[uint32_type string], :bool
     attach_function :match_message, :pactffi_match_message, %i[pointer pointer], :pointer
     attach_function :mismatches_get_iter, :pactffi_mismatches_get_iter, %i[pointer], :pointer
     attach_function :mismatches_delete, :pactffi_mismatches_delete, %i[pointer], :void
