@@ -60,7 +60,7 @@ _note_ - Alpine is currently not supported, but is on the list
 - FFI libraries for your current platform - run `./script/download-libs.sh` to download
 
 - If testing the protobuf plugin
-  - `2.7` for protobuf/grpc example
+  - `3.0` for protobuf/grpc example
     - See <https://grpc.io/docs/languages/ruby/quickstart/> for steps
     - See `examples/proto-ruby/README.md` for notes
     - ruby-grpc is not currently, on m1 hardware for the `pact-protobuf-plugin` example

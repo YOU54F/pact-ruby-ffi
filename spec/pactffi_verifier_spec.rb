@@ -13,7 +13,7 @@ RSpec.describe 'pactffi verifier spec' do
     # Check server is up
     uri = URI.parse('http://localhost:8000/api/books')
     response = nil
-    10.times do
+    100.times do # long sleep due to delays under qemu in ci
       response = Net::HTTP.get_response(uri)
       break if response.code == '404'
     rescue Errno::ECONNREFUSED

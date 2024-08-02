@@ -49,7 +49,7 @@ RSpec.describe 'pactffi_new_plugin spec' do
       PactFfi.with_pact_metadata(pact, 'pact-ruby', 'ffi', PactFfi.version)
       PactFfi::Logger.log_to_stdout(PactFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
       PactFfi::Logger.message('pact_ruby', 'INFO', 'pact ruby grpc is alive')
-      PactFfi::PluginConsumer.using_plugin(pact, 'protobuf', '0.3.15')
+      PactFfi::PluginConsumer.using_plugin(pact, 'protobuf', '0.4.0')
     end
     after do
       matched = PactFfi::MockServer.matched(mock_server_port)
@@ -108,7 +108,7 @@ RSpec.describe 'pactffi_new_plugin spec' do
       PactFfi.with_pact_metadata(pact, 'pact-ruby', 'ffi', PactFfi.version)
       PactFfi::Logger.log_to_stdout(PactFfi::FfiLogLevelFilter['LOG_LEVEL_INFO'])
       PactFfi::Logger.message('pact_ruby', 'INFO', 'pact ruby grpc is alive')
-      PactFfi::PluginConsumer.using_plugin(pact, 'protobuf', '0.3.15')
+      PactFfi::PluginConsumer.using_plugin(pact, 'protobuf', '0.4.0')
     end
     after do
       matched = PactFfi::MockServer.matched(mock_server_port)

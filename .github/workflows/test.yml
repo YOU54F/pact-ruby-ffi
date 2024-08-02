@@ -105,14 +105,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with: # gRPC demo requires Ruby < 3.0
           ruby-version: ${{ matrix.ruby-version }}
-      # - if: matrix.os == 'macos-14'
-      #   run: brew install protobuf
-      - name: Install Protoc # brew now installs protoc 26.1, last passing test on macos-14 was using 25.1-1 with no code changes
-        if: matrix.os == 'macos-14'
-        uses: arduino/setup-protoc@v2
-        with:
-          version: "25.x"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: gem update bundler
       - run: make install
       - run: make download_libs
