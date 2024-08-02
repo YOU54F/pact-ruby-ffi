@@ -212,7 +212,7 @@ end
 Given('a provider is started that can generate the {string} message with {string}') do |_filetype, file|
   filename = file.split(':').last.strip.split('.').first if file.include?('file:')
 
-  @pid = Process.spawn("ruby compatibility-suite/support/test_servers/#{filename}-server.rb".gsub('/', File::SEPARATOR))
+  @pid = Process.spawn("ruby compatibility-suite/support/test_servers/#{filename}-server.rb")
   puts @pid
   sleep(2)
 end
