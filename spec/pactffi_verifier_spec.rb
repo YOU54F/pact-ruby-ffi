@@ -9,6 +9,7 @@ RSpec.describe 'pactffi verifier spec' do
   before(:all) do
     # running in process, results in requests only hitting server when verification complete
     @pid = Process.spawn('ruby provider.rb')
+    sleep(1)
   end
   after(:all) do
     puts @pid

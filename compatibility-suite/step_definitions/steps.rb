@@ -99,13 +99,11 @@ Given('a Pact file for interaction {int} is to be verified, but is marked pendin
 end
 
 When('the verification is run') do
-  print 'veri started'
   @verifier = PactFfi::Verifier.new_for_application('pact-ruby', '0.0.0')
   PactFfi::Verifier.set_provider_info(@verifier, 'b', nil, nil, 8080, nil)
   PactFfi::Verifier.add_provider_transport(@verifier, 'message', 8080, '/__messages', 'http')
   PactFfi::Verifier.add_file_source(@verifier, @pact_file_path)
   PactFfi::Verifier.execute(@verifier)
-  puts 'veri ended'
 end
 
 Then('the verification will be successful') do
@@ -214,8 +212,9 @@ end
 Given('a provider is started that can generate the {string} message with {string}') do |_filetype, file|
   filename = file.split(':').last.strip.split('.').first if file.include?('file:')
 
-  @pid = Process.spawn("ruby compatibility-suite/support/test_servers/#{filename}-server.rb")
+  @pid = Process.spawn("ruby compatibility-suite/support/test_servers/#{filename}-server.rb".gsub('/', File::SEPARATOR))
   puts @pid
+  sleep(2)
 end
 
 After do
