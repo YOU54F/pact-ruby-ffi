@@ -1,15 +1,25 @@
 require 'webrick'
 require 'json'
-def start_server
-  server = WEBrick::HTTPServer.new(Port: 8080)
+require 'optparse'
 
-  server.mount_proc('/__messages') do |_req, res|
-    puts _req
-    res['content-type'] = 'application/json'
-    res.body = '{"one":"cat","two":"b"}'
+options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: server.rb [options]'
+
+  opts.on('-p', '--port PORT', Integer, 'Port number to listen on (default: 8000)') do |port|
+    options[:port] = port
   end
+end.parse!
 
-  server.start
+port = options[:port] || 8080
+server = WEBrick::HTTPServer.new(Port: port)
+
+server.mount_proc('/__messages') do |_req, res|
+  puts _req
+  res['content-type'] = 'application/json'
+  res.body = '{"one":"cat","two":"b"}'
 end
 
-start_server
+trap('INT') { server.shutdown }
+
+server.start

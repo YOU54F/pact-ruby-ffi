@@ -24,13 +24,13 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
       - run: gem update bundler
       - run: make install
-      - run: make download_all_libs
+      - run: make download_libs
       - run: make test
       # - run: make publish_pacts
       #   env:
@@ -55,20 +55,20 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         if: matrix.arch == 'arm64'
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         if: matrix.arch == 'arm64'
-      - run: make download_all_libs
+      - run: make download_libs
       - run: | 
           docker run --platform=linux/${{ matrix.arch }} \
             --rm -v $PWD:/app ruby:${{ matrix.ruby-version }}-alpine \
             /bin/sh -c \
             'apk add --no-cache make gcc musl-dev libffi libffi-dev git bash curl && \
-            cd /app && make download_all_libs && make install && make test'
+            cd /app && make download_all_libs && git config --global --add safe.directory /app && make install && make test'
     
       # - run: | 
       #     docker run --platform=linux/${{ matrix.arch }} \
@@ -101,7 +101,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with: # gRPC demo requires Ruby < 3.0
           ruby-version: ${{ matrix.ruby-version }}
@@ -115,7 +115,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: gem update bundler
       - run: make install
-      - run: make download_all_libs
+      - run: make download_libs
       - run: make grpc
 
 
@@ -138,7 +138,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}

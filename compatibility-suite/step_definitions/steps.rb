@@ -214,7 +214,20 @@ Given('a provider is started that can generate the {string} message with {string
 
   @pid = Process.spawn("ruby compatibility-suite/support/test_servers/#{filename}-server.rb")
   puts @pid
-  sleep(2)
+  # Check server is up
+  uri = URI.parse('http://localhost:8080/__messages')
+  response = nil
+  10.times do
+    response = Net::HTTP.get_response(uri)
+    break if response.code == '200'
+  rescue Errno::ECONNREFUSED
+    sleep(1)
+  end
+  if response && response.code == '200'
+    puts 'Healthcheck passed'
+  else
+    puts 'Healthcheck failed'
+  end
 end
 
 After do

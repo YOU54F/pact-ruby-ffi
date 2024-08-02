@@ -9,7 +9,21 @@ RSpec.describe 'pactffi verifier spec' do
   before(:all) do
     # running in process, results in requests only hitting server when verification complete
     @pid = Process.spawn('ruby provider.rb')
-    sleep(2)
+    puts @pid
+    # Check server is up
+    uri = URI.parse('http://localhost:8000/api/books')
+    response = nil
+    10.times do
+      response = Net::HTTP.get_response(uri)
+      break if response.code == '404'
+    rescue Errno::ECONNREFUSED
+      sleep(1)
+    end
+    if response && response.code == '404'
+      puts 'Healthcheck passed'
+    else
+      puts 'Healthcheck failed'
+    end
   end
   after(:all) do
     puts @pid
