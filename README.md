@@ -84,3 +84,31 @@ The gem is available as open source under the terms of the [MIT License](http://
 ## Code of Conduct
 
 Everyone interacting in the PactFfi project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/pact-ffi/blob/master/CODE_OF_CONDUCT.md).
+
+## Pact Compatibility Suite
+
+compatibility-suite/pact-compatibility-suite/features
+├── V1
+│   ├── http_consumer.feature
+│   └── http_provider.feature
+├── V2
+│   ├── http_consumer.feature
+│   └── http_provider.feature
+├── V3
+│   ├── generators.feature
+│   ├── http_consumer.feature
+│   ├── http_generators.feature
+│   ├── http_matching.feature
+│   ├── http_provider.feature
+│   ├── matching_rules.feature
+│   ├── message_consumer.feature
+│   └── message_provider.feature
+├── V4
+│   ├── generators.feature
+│   ├── http_consumer.feature ✅
+│   ├── http_provider.feature
+│   ├── matching_rules.feature
+│   ├── message_consumer.feature ✅
+│   ├── message_provider.feature ✅
+│   ├── synchronous_message_consumer.feature ✅
+│   └── v4.feature ✅
