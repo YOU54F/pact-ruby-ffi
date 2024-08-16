@@ -1,6 +1,6 @@
 require 'rspec/core/rake_task'
 require 'rubygems/package'
-
+require 'pact/ffi/version'
 RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
@@ -81,21 +81,22 @@ task :clean do
 end
 
 task :yank do
-  sh 'gem yank pact-ffi -v 0.0.1 --platform arm64-darwin'
-  sh 'gem yank pact-ffi -v 0.0.1 --platform x64-mingw-ucrt'
-  sh 'gem yank pact-ffi -v 0.0.1 --platform x86_64-darwin'
-  sh 'gem yank pact-ffi -v 0.0.1 --platform aarch64-linux'
-  sh 'gem yank pact-ffi -v 0.0.1 --platform x86_64-linux'
-  sh 'gem yank pact-ffi -v 0.0.1 --platform aarch64-linux-musl'
-  sh 'gem yank pact-ffi -v 0.0.1 --platform x86_64-linux-musl'
+  sh "gem yank pact-ffi -v #{Pact::Version::VERSION} --platform arm64-darwin"
+  sh "gem yank pact-ffi -v #{Pact::Version::VERSION} --platform x64-mingw-ucrt"
+  sh "gem yank pact-ffi -v #{Pact::Version::VERSION} --platform x86_64-darwin"
+  sh "gem yank pact-ffi -v #{Pact::Version::VERSION} --platform aarch64-linux"
+  sh "gem yank pact-ffi -v #{Pact::Version::VERSION} --platform x86_64-linux"
+  sh "gem yank pact-ffi -v #{Pact::Version::VERSION} --platform aarch64-linux-musl"
+  sh "gem yank pact-ffi -v #{Pact::Version::VERSION} --platform x86_64-linux-musl"
 end
 
 task :push do
-  sh 'cd pkg && gem push pact-ffi-0.4.22.2-arm64-darwin.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22.2-x64-mingw-ucrt.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22.2-x86_64-darwin.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22.2-aarch64-linux.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22.2-x86_64-linux.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22.2-aarch64-linux-musl.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22.2-x86_64-linux-musl.gem'
+  sh "cd pkg && gem push pact-ffi-#{Pact::Version::VERSION}-arm64-darwin.gem"
+  sh "cd pkg && gem push pact-ffi-#{Pact::Version::VERSION}-x64-mingw-ucrt.gem"
+  sh "cd pkg && gem push pact-ffi-#{Pact::Version::VERSION}-x86_64-darwin.gem"
+  sh "cd pkg && gem push pact-ffi-#{Pact::Version::VERSION}-aarch64-linux.gem"
+  sh "cd pkg && gem push pact-ffi-#{Pact::Version::VERSION}-x86_64-linux.gem"
+  sh "cd pkg && gem push pact-ffi-#{Pact::Version::VERSION}-aarch64-linux-musl.gem"
+  sh "cd pkg && gem push pact-ffi-#{Pact::Version::VERSION}-x86_64-linux-musl.gem"
+  sh "cd pkg && gem push pact-ffi-#{Pact::Version::VERSION}-x64-mingw32.gem"
 end

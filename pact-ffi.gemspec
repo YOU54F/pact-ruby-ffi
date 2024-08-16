@@ -1,9 +1,10 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'pact/ffi/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'pact-ffi'
-  spec.version       = '0.4.22.2'
+  spec.version       = Pact::Version::VERSION
   spec.authors       = ['Yousaf Nabi']
   spec.email         = ['you@saf.dev']
   spec.summary       = 'Pact Reference FFI libpact_ffi library wrapper'
@@ -16,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'cucumber', '~> 9.2'
   spec.add_development_dependency 'httparty', '~> 0.21.0'
   spec.add_development_dependency 'nokogiri', '~> 1.16'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'webrick', '~> 1.8'
   spec.add_dependency 'ffi', '~> 1.15'
