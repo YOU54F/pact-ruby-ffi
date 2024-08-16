@@ -54,6 +54,11 @@ PLATFORMS = [
     ruby_platform: 'x64-mingw-ucrt',
     ffi_location: 'windows-x64',
     ffi_name: 'pact_ffi.dll'
+  },
+  {
+    ruby_platform: 'x64-mingw32',
+    ffi_location: 'windows-x64',
+    ffi_name: 'pact_ffi.dll'
   }
 ]
 task :build do
@@ -86,11 +91,11 @@ task :yank do
 end
 
 task :push do
-  sh 'cd pkg && gem push pact-ffi-0.4.22-arm64-darwin.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22-x64-mingw-ucrt.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22-x86_64-darwin.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22-aarch64-linux.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22-x86_64-linux.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22-aarch64-linux-musl.gem'
-  sh 'cd pkg && gem push pact-ffi-0.4.22-x86_64-linux-musl.gem'
+  sh 'cd pkg && gem push pact-ffi-0.4.22.1-arm64-darwin.gem'
+  sh 'cd pkg && gem push pact-ffi-0.4.22.1-x64-mingw-ucrt.gem'
+  sh 'cd pkg && gem push pact-ffi-0.4.22.1-x86_64-darwin.gem'
+  sh 'cd pkg && gem push pact-ffi-0.4.22.1-aarch64-linux.gem'
+  sh 'cd pkg && gem push pact-ffi-0.4.22.1-x86_64-linux.gem'
+  sh 'cd pkg && gem push pact-ffi-0.4.22.1-aarch64-linux-musl.gem'
+  sh 'cd pkg && gem push pact-ffi-0.4.22.1-x86_64-linux-musl.gem'
 end

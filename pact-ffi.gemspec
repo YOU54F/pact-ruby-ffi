@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'pact-ffi'
-  spec.version       = '0.4.22'
+  spec.version       = '0.4.22.1'
   spec.authors       = ['Yousaf Nabi']
   spec.email         = ['you@saf.dev']
   spec.summary       = 'Pact Reference FFI libpact_ffi library wrapper'
