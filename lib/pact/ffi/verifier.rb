@@ -33,7 +33,7 @@ module PactFfi
     attach_function :new_for_application, :pactffi_verifier_new_for_application, %i[string string], :pointer
     attach_function :shutdown, :pactffi_verifier_shutdown, %i[pointer], :void
     attach_function :set_provider_info, :pactffi_verifier_set_provider_info,
-                    %i[pointer string string string uint16 string], :void
+                    %i[pointer string string string ushort string], :void
     attach_function :add_provider_transport, :pactffi_verifier_add_provider_transport,
                     %i[pointer string uint16 string string], :void
     attach_function :set_filter_info, :pactffi_verifier_set_filter_info, %i[pointer string string uint8], :void
