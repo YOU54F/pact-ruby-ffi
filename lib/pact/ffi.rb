@@ -415,8 +415,8 @@ module PactFfi
   attach_function :verifier_logs_for_provider, :pactffi_verifier_logs_for_provider, %i[string], :string
   attach_function :verifier_output, :pactffi_verifier_output, %i[pointer uint8], :string
   attach_function :verifier_json, :pactffi_verifier_json, %i[pointer], :string
-  attach_function :using_plugin, :pactffi_using_plugin, %i[pointer string string], :uint32_type
-  attach_function :cleanup_plugins, :pactffi_cleanup_plugins, %i[pointer], :void
+  attach_function :using_plugin, :pactffi_using_plugin, %i[uint16 string string], :uint32_type
+  attach_function :cleanup_plugins, :pactffi_cleanup_plugins, %i[uint16], :void
   attach_function :interaction_contents, :pactffi_interaction_contents, %i[uint32_type int32 string string],
                   :uint32_type
   attach_function :matches_string_value, :pactffi_matches_string_value, %i[pointer string string uint8], :string

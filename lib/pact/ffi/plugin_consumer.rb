@@ -32,8 +32,8 @@ module PactFfi
       'RESULT_FAILED' => 1,
     ]
 
-    attach_function :using_plugin, :pactffi_using_plugin, %i[pointer string string], :uint32_type
-    attach_function :cleanup_plugins, :pactffi_cleanup_plugins, %i[pointer], :void
+    attach_function :using_plugin, :pactffi_using_plugin, %i[uint16 string string], :uint32_type
+    attach_function :cleanup_plugins, :pactffi_cleanup_plugins, %i[uint16], :void
     attach_function :interaction_contents, :pactffi_interaction_contents, %i[uint32_type int32 string string],
                     :uint32_type
   end
