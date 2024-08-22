@@ -8,7 +8,7 @@ require_binary gunzip
 
 require_env_var FFI_VERSION
 
-BASEURL=https://github.com/yousaf/pact-reference/releases/download
+BASEURL=https://github.com/you54f/pact-reference/releases/download
 FFI_DIR="ffi"
 
 warn "Cleaning ffi directory $FFI_DIR"
