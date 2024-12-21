@@ -72,6 +72,7 @@ module PactFfi
     ]
 
     attach_function :contents_get_contents_str, :pactffi_message_contents_get_contents_str, %i[pointer], :string
+    attach_function :contents_delete, :pactffi_message_contents_delete, %i[pointer], :void
     attach_function :contents_set_contents_str, :pactffi_message_contents_set_contents_str, %i[pointer string string], :void
     attach_function :contents_get_contents_length, :pactffi_message_contents_get_contents_length, %i[pointer], :size_t
     attach_function :contents_get_contents_bin, :pactffi_message_contents_get_contents_bin, %i[pointer], :pointer

@@ -42,8 +42,8 @@ puts PactFfi.pactffi_version
   
 | OS            | Ruby          | Architecture | Supported   | Ruby Platform     |
 | -------       | -------       | ------------ | ---------   | ---------         |
-| OSX           | 2.6 - 3.3     | x86_64       | ✅          | x86_64-darwin     |
-| OSX           | 2.6 - 3.3     | aarch64 (arm)| ✅          | arm64-darwin      |
+| MacOS         | 2.6 - 3.3     | x86_64       | ✅          | x86_64-darwin     |
+| MacOS         | 2.6 - 3.3     | aarch64 (arm)| ✅          | arm64-darwin      |
 | Linux         | 2.6 - 3.3     | x86_64       | ✅          | x86_64-linux      |
 | Linux         | 2.6 - 3.3     | aarch64 (arm)| ✅          | aarch64-linux     |
 | Linux (musl)  | 2.6 - 3.3     | x86_64       | ✅          | x86_64-linux-musl |

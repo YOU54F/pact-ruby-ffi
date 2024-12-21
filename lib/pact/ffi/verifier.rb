@@ -51,7 +51,7 @@ module PactFfi
     attach_function :url_source, :pactffi_verifier_url_source, %i[pointer string string string string], :void
     attach_function :broker_source, :pactffi_verifier_broker_source, %i[pointer string string string string], :void
     attach_function :broker_source_with_selectors, :pactffi_verifier_broker_source_with_selectors,
-                    %i[pointer string string string string uint8 string pointer uint16 string pointer uint16 pointer uint16], :void
+                    %i[pointer string string string string uint8 string pointer uint16 string pointer uint16 pointer uint16], :int32
     attach_function :execute, :pactffi_verifier_execute, %i[pointer], :int32
     attach_function :cli_args, :pactffi_verifier_cli_args, %i[], :string
     attach_function :logs, :pactffi_verifier_logs, %i[pointer], :string
