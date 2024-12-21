@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-12, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
         ruby-version: [
           # '2.6',
           # '2.7', 
@@ -85,7 +85,7 @@ jobs:
         os: [
           ubuntu-latest, 
           windows-latest,
-          macos-12, 
+          macos-13, 
           macos-14
           ]
         ruby-version: [
@@ -115,7 +115,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-12, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
         ruby-version: [
           # '2.6',
           # '2.7', 
