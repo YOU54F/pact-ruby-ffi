@@ -146,5 +146,6 @@ module PactFfi
     attach_function :matches_json_value, :pactffi_matches_json_value, %i[pointer string string uint8], :string
     attach_function :pact_handle_to_pointer, :pactffi_pact_handle_to_pointer, %i[uint16], :pointer
     attach_function :handle_get_pact_spec_version, :pactffi_handle_get_pact_spec_version, %i[uint16], :int32
+    attach_function :with_metadata, :pactffi_with_metadata, %i[uint32_type string string int32], :bool
   end
 end

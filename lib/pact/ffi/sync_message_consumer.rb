@@ -21,6 +21,7 @@ module PactFfi
     attach_function :get_request_contents_bin, :pactffi_sync_message_get_request_contents_bin, %i[pointer], :pointer
     attach_function :set_request_contents_bin, :pactffi_sync_message_set_request_contents_bin, %i[pointer pointer size_t string], :void
     attach_function :get_request_contents, :pactffi_sync_message_get_request_contents, %i[pointer], :pointer
+    attach_function :generate_request_contents, :pactffi_sync_message_generate_request_contents, %i[pointer], :pointer
     attach_function :get_number_responses, :pactffi_sync_message_get_number_responses, %i[pointer], :size_t
     attach_function :get_response_contents_str, :pactffi_sync_message_get_response_contents_str, %i[pointer size_t], :string
     attach_function :set_response_contents_str, :pactffi_sync_message_set_response_contents_str, %i[pointer size_t string string], :void
@@ -33,6 +34,6 @@ module PactFfi
     attach_function :get_provider_state, :pactffi_sync_message_get_provider_state, %i[pointer uint32_type], :pointer
     attach_function :get_provider_state_iter, :pactffi_sync_message_get_provider_state_iter, %i[pointer], :pointer
     attach_function :new_interaction, :pactffi_new_sync_message_interaction, %i[uint16 string], :uint32_type
-    attach_function :pact_handle_get_sync_message_iter, :pactffi_pact_handle_get_sync_message_iter, %i[uint16], :pointer
+    attach_function :get_iter, :pactffi_pact_handle_get_sync_message_iter, %i[uint16], :pointer
   end
 end

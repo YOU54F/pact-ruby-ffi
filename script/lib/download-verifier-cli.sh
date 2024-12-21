@@ -73,13 +73,13 @@ echo detected_os = $detected_os
 case ${detected_os} in
 'Darwin arm64')
     echo "downloading of osx aarch64 verifier cli"
-    os='osx-aarch64'
-    download_verifier_cli "osx-aarch64.gz" "" "pact_verifier_cli.gz" "${os}"
+    os='macos-aarch64'
+    download_verifier_cli "macos-aarch64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 'Darwin x86' | 'Darwin x86_64' | "Darwin"*)
     echo "downloading of osx x86_64 verifier cli"
-    os='osx-x86_64'
-    download_verifier_cli "osx-x86_64.gz" "" "pact_verifier_cli.gz" "${os}"
+    os='macos-x86_64'
+    download_verifier_cli "macos-x86_64.gz" "" "pact_verifier_cli.gz" "${os}"
     ;;
 "Linux aarch64"* | "Linux arm64"*)
     echo "downloading of linux aarch64 verifier cli"

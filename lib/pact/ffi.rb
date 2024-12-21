@@ -372,8 +372,7 @@ module PactFfi
                   :void
   attach_function :message_with_contents, :pactffi_message_with_contents, %i[uint32_type string pointer size_t], :void
   attach_function :message_with_metadata, :pactffi_message_with_metadata, %i[uint32_type string string], :void
-  attach_function :message_with_metadata_v2, :pactffi_message_with_metadata_v2, %i[uint32_type string string], :void
-  attach_function :with_metadata, :pactffi_with_metadata, %i[uint32_type string string int], :void
+  attach_function :with_metadata, :pactffi_with_metadata, %i[uint32_type string string int32], :bool
   attach_function :message_reify, :pactffi_message_reify, %i[uint32_type], :string
   attach_function :write_message_pact_file, :pactffi_write_message_pact_file, %i[uint16 string bool], :int32
   attach_function :with_message_pact_metadata, :pactffi_with_message_pact_metadata, %i[uint16 string string string],
@@ -408,7 +407,7 @@ module PactFfi
   attach_function :verifier_broker_source, :pactffi_verifier_broker_source, %i[pointer string string string string],
                   :void
   attach_function :verifier_broker_source_with_selectors, :pactffi_verifier_broker_source_with_selectors,
-                  %i[pointer string string string string uint8 string pointer uint16 string pointer uint16 pointer uint16], :void
+                  %i[pointer string string string string uint8 string pointer uint16 string pointer uint16 pointer uint16], :int32
   attach_function :verifier_execute, :pactffi_verifier_execute, %i[pointer], :int32
   attach_function :verifier_cli_args, :pactffi_verifier_cli_args, %i[], :string
   attach_function :verifier_logs, :pactffi_verifier_logs, %i[pointer], :string
@@ -429,13 +428,25 @@ module PactFfi
   attach_function :matches_json_value, :pactffi_matches_json_value, %i[pointer string string uint8], :string
   attach_function :pact_handle_to_pointer, :pactffi_pact_handle_to_pointer, %i[uint16], :pointer
   attach_function :handle_get_pact_spec_version, :pactffi_handle_get_pact_spec_version, %i[uint16], :int32
-  attach_function :with_multipart_file, :pactffi_with_multipart_file, %i[uint32_type int32 string string string],
-                  :pointer
   attach_function :set_header, :pactffi_set_header, %i[uint32_type int32 string string], :bool
   attach_function :with_binary_body, :pactffi_with_binary_body, %i[uint32_type int32 string pointer size_t], :bool
   attach_function :with_matching_rules, :pactffi_with_matching_rules, %i[uint32_type int32 string], :bool
   attach_function :with_multipart_file_v2, :pactffi_with_multipart_file_v2,
                   %i[uint32_type int32 string string string string], :pointer
   attach_function :message_with_metadata_v2, :pactffi_message_with_metadata_v2, %i[uint32_type string string], :void
-  attach_function :with_generators, :pactffi_with_generators, %i[uint32_type int string], :bool
+  attach_function :with_generators, :pactffi_with_generators, %i[uint32_type int32 string], :bool
+  attach_function :async_message_generate_contents, :pactffi_async_message_generate_contents, %i[pointer], :pointer
+  attach_function :message_contents_delete, :pactffi_message_contents_delete, %i[pointer], :void
+  attach_function :pact_async_message_iter_next, :pactffi_pact_async_message_iter_next, %i[pointer], :pointer
+  attach_function :pact_async_message_iter_delete, :pactffi_pact_async_message_iter_delete, %i[pointer], :void
+  attach_function :sync_message_generate_request_contents, :pactffi_sync_message_generate_request_contents,
+                  %i[pointer], :pointer
+  attach_function :sync_message_generate_response_contents, :pactffi_sync_message_generate_response_contents,
+                  %i[pointer size_t], :pointer
+  attach_function :response_status_v2, :pactffi_response_status_v2, %i[uint32_type string], :bool
+  attach_function :set_key, :pactffi_set_key, %i[uint32_type string], :bool
+  attach_function :set_pending, :pactffi_set_pending, %i[uint32_type bool], :bool
+  attach_function :set_comment, :pactffi_set_comment, %i[uint32_type string string], :bool
+  attach_function :add_text_comment, :pactffi_add_text_comment, %i[uint32_type string], :bool
+  attach_function :pact_handle_get_async_message_iter, :pactffi_pact_handle_get_async_message_iter, %i[uint16], :pointer
 end
