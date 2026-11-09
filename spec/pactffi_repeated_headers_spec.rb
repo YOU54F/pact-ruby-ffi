@@ -65,7 +65,7 @@ RSpec.describe 'repeated request headers (RFC 9110 §5.3)' do
     { id: 'H6a', header: 'X-Request',
       expected: [RepeatedHeaders.regex('^first-\d+$', 'first-1'), RepeatedHeaders.regex('^first-\d+$', 'first-2')],
       sent: %w[first-42 first-99], match: true },
-    { id: 'H6b', header: 'X-Request', expected: ['"x , y"', 'z'], sent: ['"x, y"', 'z'], match: true },
+    { id: 'H6b', header: 'X-Request', expected: ['"x , y"', 'z'], sent: ['"x, y"', 'z'], match: false },
     { id: 'H8a', header: 'Link', expected: link_values, sent: link_values, match: true },
     { id: 'H8b', header: 'Link', expected: link_values, sent: [link_values.join(', ')], match: true }
   ]
@@ -102,11 +102,13 @@ RSpec.describe 'repeated request headers (RFC 9110 §5.3)' do
   end
 
   # The FFI logger is process-wide and can only be set up once; the other specs in this
-  # suite already set it to ERROR. To see the WARN line, run H6b in a child process that
+  # suite already set it to ERROR. To check for a WARN line, run H6b in a child process that
   # sets up the in-memory log buffer at WARN before starting the mock server, then reads
   # the mock server's logs with pactffi_mock_server_logs.
-  describe 'H6b: deprecation warning' do
-    it 'logs a WARN citing RFC 9110 §5.3 for per-line matching' do
+  # Whitespace inside a quoted string is literal (RFC 9110 §5.6.4), so H6b is a plain
+  # mismatch: no per-line fallback, and so no deprecation WARN.
+  describe 'H6b: no deprecation warning' do
+    it 'records a mismatch and logs no RFC 9110 §5.3 WARN' do
       lib_dir = File.expand_path('../lib', __dir__)
       script = <<~RUBY
         require 'socket'
@@ -128,8 +130,11 @@ RSpec.describe 'repeated request headers (RFC 9110 §5.3)' do
         s = TCPSocket.new('127.0.0.1', port)
         s.write("GET /headers HTTP/1.1\\r\\nHost: 127.0.0.1:\#{port}\\r\\n" \\
                 "X-Request: \\"x, y\\"\\r\\nX-Request: z\\r\\nConnection: close\\r\\n\\r\\n")
+        status_line = s.gets
         s.read
         s.close
+        $stdout.write(status_line)
+        $stdout.write(PactFfi::MockServer.mismatches(port).to_s + "\\n")
         $stdout.write(PactFfi::MockServer.logs(port).to_s)
         PactFfi::MockServer.cleanup(port)
       RUBY
@@ -138,9 +143,12 @@ RSpec.describe 'repeated request headers (RFC 9110 §5.3)' do
       logs = logs.dup.force_encoding(Encoding::UTF_8)
       expect(status.success?).to be true
 
-      warnings = logs.lines.select { |line| line.include?('WARN') && line.include?('RFC 9110 §5.3') }
-      expect(warnings.length).to eq(1)
-      expect(warnings.first).to include('only matched when its field lines were compared one at a time')
+      status_line, mismatches, *log_lines = logs.lines
+      expect(status_line.split(' ')[1].to_i).not_to eq(200)
+      expect(JSON.parse(mismatches).length).to be >= 1
+
+      warnings = log_lines.select { |line| line.include?('WARN') && line.include?('RFC 9110 §5.3') }
+      expect(warnings).to eq([])
     end
   end
 end
