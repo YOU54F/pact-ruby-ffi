@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      # TEMP: test jobs skip on draft PRs; run them on push to this branch (revert before merge)
+      - fix/repeated-headers-rfc9110
   pull_request:
     branches:
       - main

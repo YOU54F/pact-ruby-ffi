@@ -18,7 +18,9 @@ require_relative 'lib/platforms'
 require_relative '../lib/pact/ffi/version'
 
 ROOT                = File.expand_path('..', __dir__)
-FFI_BASE_URL        = 'https://github.com/pact-foundation/pact-reference/releases/download'
+# TEMP: consume the pact_ffi 0.5.13-rc.1 fork prerelease (revert before merge)
+FFI_BASE_URL        = 'https://github.com/YOU54F/pact-reference/releases/download'
+FFI_VERSION_OVERRIDE = 'v0.5.13-rc.1'
 STANDALONE_BASE_URL = 'https://github.com/pact-foundation/pact-standalone/releases/download'
 STANDALONE_VERSION  = '2.5.2'
 
@@ -37,6 +39,8 @@ STANDALONE_ASSETS = {
 def log(msg) = puts "🔵  #{msg}"
 
 def ffi_version
+  return FFI_VERSION_OVERRIDE if FFI_VERSION_OVERRIDE
+
   "v#{Pact::Version::VERSION.split('.')[0..2].join('.')}"
 end
 
